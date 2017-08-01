@@ -2,7 +2,6 @@
 #define GUI_MAPDRAWER_H_
 
 #include <HamsterAPIClientCPP/Hamster.h>
-#include "MapPointType.cpp"
 #include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
 #include "../Localization/LocalizationParticle.h"
@@ -13,6 +12,20 @@
 #include "../Helpers/Angle.h"
 using namespace HamsterAPI;
 using namespace std;
+
+enum MapPointType {
+	Unknown,
+	Free,
+	Obstacle,
+	Path,
+	PathStart,
+	PathEnd,
+	Waypoint,
+	Particle,
+	LidarScanObstacle,
+	GoodParticle,
+	BadParticle
+};
 
 class MapDrawer {
 private:
