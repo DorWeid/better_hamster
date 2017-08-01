@@ -1,8 +1,19 @@
 #include "Robot.h"
 
-// Constructor
-Robot::Robot(Hamster * h, LocalizationManager * locMng, double height, double width, double res) :
-leHamster(h), localizationManager(locMng), mapHeight(height), mapWidth(width), resolution(res) {}
+Robot::Robot()
+{
+	 cv::namedWindow("Room-Map");
+
+	this->leHamster = new HamsterAPI::Hamster(1);
+
+	// Safety
+	sleep(3);
+
+	this->mapHeight = -1;
+	this->mapWidth = -1;
+	this->resolution = -1;
+	this->localizationManager = NULL;
+}
 
 // Get the hamster's current location by returning a structure of {positionState} type
 positionState Robot::getRealHamsterLocation()
@@ -35,6 +46,11 @@ void Robot::updateHamsterRealLocation()
 void Robot::setHamsterSpeed(double speed, double wheelsAngle)
 {
 	this->leHamster->sendSpeed(speed, wheelsAngle);
+}
+
+HamsterAPI::Hamster * Robot::getHamster()
+{
+	return leHamster;
 }
 
 // Destructor

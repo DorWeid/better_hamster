@@ -25,7 +25,7 @@ class Robot
 		positionState prevBeliefedLocation, currBeliefedLocation, realLocation;
 
 		// Constructor
-		Robot(Hamster * h, LocalizationManager * locMng, double height, double width, double res);
+		Robot();
 
 		// Destructor
 		~Robot();
@@ -35,10 +35,8 @@ class Robot
 		void updateHamsterRealLocation();
 		void setHamsterSpeed(double speed, double wheelsAngle);
 
-
-	private:
-		// The robot instance. Should be initialized once!
-		Hamster * leHamster;
+		// Returns the hamster's instance
+		HamsterAPI::Hamster * getHamster();
 
 		// Localization manager instance
 		LocalizationManager * localizationManager;
@@ -46,6 +44,10 @@ class Robot
 		double mapHeight;
 		double mapWidth;
 		double resolution;
+
+	private:
+		// The robot instance. Should be initialized once!
+		Hamster * leHamster;
 };
 
 #endif /* ROBOT_H_ */

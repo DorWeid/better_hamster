@@ -15,16 +15,22 @@
 
 using namespace std;
 using namespace HamsterAPI;
-HamsterAPI::Hamster * hamster;
+
+Robot * leRobot = new Robot();
+
 
 void startRobotAction();
 
 int main() {
-	try {
+	try
+	{
 		startRobotAction();
-	} catch (const HamsterAPI::HamsterError & connection_error) {
+	}
+	catch (const HamsterAPI::HamsterError & connection_error)
+	{
 		HamsterAPI::Log::i("Client", connection_error.what());
 	}
+
 	return 0;
 }
 
@@ -59,14 +65,11 @@ void initializeParticalesOnRobot(OccupancyGrid roomRealMapFromMemory,
 
 void startRobotAction() {
 
- cv::namedWindow("Room-Map");
- hamster = new HamsterAPI::Hamster(1);
- sleep(3);
 
  NodeMap roomRealMap;
  NodeMap roomBlownMap;
  PathPlanner *pathPlanner;
- OccupancyGrid roomRealMapFromMemory = hamster->getSLAMMap();
+ OccupancyGrid roomRealMapFromMemory = leRobot->getHamster()->getSLAMMap();
  MapDrawer* mapDrawer = new MapDrawer(roomRealMapFromMemory.getWidth(), roomRealMapFromMemory.getHeight());
 
 
@@ -96,7 +99,8 @@ void startRobotAction() {
  mapDrawer->DrawPath(goalPos);
 
 
- Pose robotStartPose = hamster->getPose();
+ Pose robotStartPose = leRobot->getHamster()->getPose();
+
  struct position startPosition = {.x =
 		 ROBOT_START_X + robotStartPose.getX(), .y = ROBOT_START_Y -  robotStartPose.getX()};
 
@@ -105,25 +109,30 @@ void startRobotAction() {
 
  double mapResolution = roomRealMapFromMemory.getResolution();
 
- LocalizationManager* localizationManager = new LocalizationManager(drawedMap, hamster, mapResolution);
- Robot robot(hamster,localizationManager, roomRealMapFromMemory.getHeight(), roomRealMapFromMemory.getWidth(), mapResolution);
+ LocalizationManager* localizationManager = new LocalizationManager(drawedMap, leRobot->getHamster(), mapResolution);
+
+ leRobot->localizationManager = localizationManager;
+ leRobot->mapHeight = roomRealMapFromMemory.getHeight();
+ leRobot->mapWidth = roomRealMapFromMemory.getWidth();
+ leRobot->resolution = mapResolution;
+
  localizationManager->InitParticalesOnMap(&startPositionState);
 
  //initializeParticalesOnRobot(roomRealMapFromMemory, roomBlownMap, localizationManager, mapDrawer, goalPos);
 
  //mapDrawer->DrawRobot(robot.GetRealHamsterLocation());
- MovementManager movementManager(&robot, mapDrawer);
+ MovementManager movementManager(leRobot, mapDrawer);
 
-if(hamster->isConnected()) {
+if(leRobot->getHamster()->isConnected()) {
  // foreach waypoint
  for (std::list<Node*>::reverse_iterator iter = waypoints.rbegin(); iter != waypoints.rend(); ++iter)
 	{
 		Node* currWaypoint = *iter;
 
 		Node hamsterWaypoint = ConvertToHamsterLocation(currWaypoint);
-		robot.realLocation = robot.currBeliefedLocation = robot.getRealHamsterLocation();
+		leRobot->realLocation = leRobot->currBeliefedLocation = leRobot->getRealHamsterLocation();
 
-		if (isWaypointReached(robot.currBeliefedLocation, hamsterWaypoint))
+		if (isWaypointReached(leRobot->currBeliefedLocation, hamsterWaypoint))
 		{
 			cout << endl << "Reached waypoint (" << hamsterWaypoint.x << ", " << hamsterWaypoint.y << ")" << endl << endl;
 		}
