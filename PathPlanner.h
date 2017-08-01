@@ -3,9 +3,9 @@
 
 #include <set>
 #include <math.h>
-#include "Structs.h"
 #include "NodeMap/NodeMap.h"
-#include "Constants.h"
+#include "Helpers/Constants.h"
+#include "Helpers/Structures.h"
 
 using namespace std;
 

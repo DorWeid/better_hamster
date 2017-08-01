@@ -6,10 +6,11 @@
 #include "../NodeMap/Node.h"
 #include "../NodeMap/NodeMap.h"
 #include "../Localization/LocalizationParticle.h"
-#include "../Utils/PositionUtils.h"
-#include "../Utils/AngleUtils.h"
+#include "../Helpers/PositionUtils.h"
 #include "../Robot/Robot.h"
 #include "opencv2/imgproc.hpp"
+
+#include "../Helpers/AngleUtils.h"
 using namespace HamsterAPI;
 using namespace std;
 

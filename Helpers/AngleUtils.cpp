@@ -1,7 +1,6 @@
-#include <HamsterAPIClientCPP/Hamster.h>
-
 #include "AngleUtils.h"
-#include "../Constants.h"
+#include <HamsterAPIClientCPP/Hamster.h>
+#include "Constants.h"
 
 double convertDegreesToRadians(double angleDegrees)
 {

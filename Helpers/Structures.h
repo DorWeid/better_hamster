@@ -1,5 +1,10 @@
-#ifndef STRUCTS_H_
-#define STRUCTS_H_
+/**
+ * Structures
+ * A helper .h file for managing structures
+ */
+
+#ifndef STRUCTURES_H_
+#define STRUCTURES_H_
 
 struct rectangle
 {
@@ -37,5 +42,5 @@ struct parameters
 	double gridResolutionCM;
 };
 
-#endif  STRUCTS_H_
+#endif  STRUCTURES_H_
 

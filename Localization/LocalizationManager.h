@@ -5,8 +5,8 @@
 #include "LocalizationParticle.h"
 #include <vector>
 #include <HamsterAPIClientCPP/Hamster.h>
-#include "../Constants.h"
-#include "../Structs.h"
+#include "../Helpers/Constants.h"
+#include "../Helpers/Structures.h"
 #define NUM_OF_PARTICALES 350
 #define TRY_TO_BACK 20
 #define TOP_PARTICALES 80

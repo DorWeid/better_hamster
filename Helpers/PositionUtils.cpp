@@ -1,9 +1,9 @@
 #ifndef UTILS_POSITIONUTILS_H_
 #define UTILS_POSITIONUTILS_H_
-#include "../Structs.h"
 #include <math.h>
 #include "../NodeMap/Node.h"
-#include "../Constants.h"
+#include "Constants.h"
+#include "Structures.h"
 
 Node ConvertToHamsterLocation(Node* waypoint)
 {

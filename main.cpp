@@ -5,11 +5,12 @@
 #include <stdlib.h>
 #include "Gui/MapDrawer.h"
 #include "Localization/LocalizationManager.h"
-#include "Structs.h"
 #include "Robot/Robot.h"
 #include "MovementManager.h"
-#include "Utils/PositionUtils.h"
 #include "math.h"
+
+#include "Helpers/PositionUtils.h"
+#include "Helpers/Structures.h"
 
 using namespace std;
 using namespace HamsterAPI;

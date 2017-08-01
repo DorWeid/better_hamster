@@ -4,9 +4,9 @@
 #include <vector>
 #include <HamsterAPIClientCPP/Hamster.h>
 #include "Node.h"
-#include "../Constants.h"
-#include "../Structs.h"
-#include "../Utils/PositionUtils.h"
+#include "../Helpers/Constants.h"
+#include "../Helpers/PositionUtils.h"
+#include "../Helpers/Structures.h"
 
 using namespace std;
 using namespace HamsterAPI;

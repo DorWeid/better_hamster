@@ -10,10 +10,10 @@
 
 #include "Robot/Robot.h"
 #include "HamsterAPIClientCPP/Hamster.h"
-#include "Utils/AngleUtils.h"
 #include <vector>
 #include <math.h>
-#include "Constants.h"
+#include "Helpers/Constants.h"
+#include "Helpers/AngleUtils.h"
 using namespace std;
 using namespace HamsterAPI;
 
