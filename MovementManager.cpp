@@ -17,7 +17,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 	robot->realLocation = robot->prevBeliefedLocation = robot->currBeliefedLocation = robot->getRealHamsterLocation();
 
 	// According to the location of the robot calculate the distance from the waypoint
-	recalculateDistanceFromWaypoint();
+	recalculateDistanceFromTarget();
 
 	// While the distance from the wayPoint is bigger than the tolerance distance
 	while (distanceFromWaypoint > DISTANCE_FROM_WAYPOINT_TOLERANCE)
@@ -35,12 +35,12 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 		calculateTargetYaw(waypoint);
 
 		// Check if the robot need to adjust is angle  
-		if (isRequiredAngleAdjustment())
+		if (isNeedAngleAdjustment())
 		{
 			cout << "Turning, targetYaw: " << targetYaw << " currYaw: " << robot->currBeliefedLocation.yaw << " deltaYaw: " << deltaYaw << " w: (" << waypoint->getX() << ", " << waypoint->getY() <<
 					") r: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
 			// Adjust the angle
-			turnToWaypoint();
+			turnToTarget();
 		}
 		else
 		{
@@ -48,11 +48,11 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 					") robot: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
 
 			// Move forward to the waypoint
-			moveToWaypoint();
+			moveForward();
 		}
 
 		// Recalculate distance from the wayPoint
-		recalculateDistanceFromWaypoint();
+		recalculateDistanceFromTarget();
 		//mapDrawer->DrawRobot(robot->GetRealHamsterLocation());
 		
 		// Draw the location of the robot on the map
@@ -70,7 +70,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 }
 
 // Calculate the distance to the waypoint
-void MovementManager::recalculateDistanceFromWaypoint()
+void MovementManager::recalculateDistanceFromTarget()
 {
 	distanceFromWaypoint =
 		sqrt(pow(robot->currBeliefedLocation.pos.x - waypoint->getX(), 2) +
@@ -78,13 +78,13 @@ void MovementManager::recalculateDistanceFromWaypoint()
 }
 
 // Turn to the waypoint
-void MovementManager::turnToWaypoint()
+void MovementManager::turnToTarget()
 {
 	robot->setHamsterSpeed(calculateTurnSpeed(), calculateTurningDirection());
 }
 
 // Move forward to the waypoint
-void MovementManager::moveToWaypoint()
+void MovementManager::moveForward()
 {
 	robot->setHamsterSpeed(calculateForwardSpeed(), 0.0);
 }
@@ -189,7 +189,7 @@ void MovementManager::recalculateDeltaYaw()
 }
 
 // Return if there is a need to adjust the angle of the robot
-bool MovementManager::isRequiredAngleAdjustment()
+bool MovementManager::isNeedAngleAdjustment()
 {
 	// If the delta angle is bigger than the angle tolerance
 	return !isDeltaAngleOnEndOfCiricle() && deltaYaw > YAW_TOLERANCE;
