@@ -7,23 +7,53 @@ MapDrawer::MapDrawer(int width, int height) : WINDOW_TITLE("Room-Map")
 
 }
 
+// Show on the cv the drawed map
+void MapDrawer::Show(positionState robotPos)
+{
+	cv::Point2f center(ROBOT_START_X,ROBOT_START_Y);
+	cv::Mat resultMap;
+	cv::Mat scaled;
+
+	cv::Mat tempMap;
+	scaled = cv::getRotationMatrix2D(center, 0, 1.0);
+	cv::warpAffine(*_map, tempMap, scaled, _map->size());
+
+	DrawRobot(robotPos,&tempMap);
+
+	scaled = cv::getRotationMatrix2D(center, 0, 2.0);
+	cv::warpAffine(tempMap, resultMap, scaled, _map->size());
+
+	cv::imshow(MapDrawer::WINDOW_TITLE, resultMap);
+	cv::waitKey(100);
+}
+
+cv::Mat* MapDrawer::getMap()
+{
+	return _map;
+}
+
+
+// Draw the grid with a rotation angle
 void MapDrawer::DrawMap(OccupancyGrid* occupancyGridMap, double rotationAngle)
 {
 	int width = occupancyGridMap->getWidth();
 	int height = occupancyGridMap->getHeight();
 
+	/*
 	for (int x = 0; x < height; x++)
 	{
 		 for (int y = 0; y < width; y++)
 		 {
 			MapDrawer::SetPointType(x,y, Free);
 		 }
-	}
+	} */
 
+	// Run over all pixel of the map
 	for (int x = 0; x < height; x++)
 	{
 	     for (int y = 0; y < width; y++)
 	     {
+		     // Set the point type according to the cell of the grid
 				  if (occupancyGridMap->getCell(x, y) == CELL_FREE)
 				  {
 					  MapDrawer::SetPointType(x,y, Free);
@@ -40,19 +70,24 @@ void MapDrawer::DrawMap(OccupancyGrid* occupancyGridMap, double rotationAngle)
 	     }
 	}
 
+	// Rotate the map according to the parameter
 	if(rotationAngle != 0)
 	{
 		rotateMapOnOrigin(_map, _map, rotationAngle);
 	}
 }
 
+// Draw a Node map
 void MapDrawer::DrawNodeMap(NodeMap* nodeMap)
 {
 	int width = nodeMap->getWidth();
 	int height = nodeMap->getHeight();
 
+	// Run over all the pixel on the map
 	for (int y = 0; y < height; y++) {
 	     for (int x = 0; x < width; x++) {
+		     
+	      // Check if the node at this point is a obstacle
 	      if (nodeMap->getNodeByCoordinates(y,x)->isObstacle)
 	      {
 	    	  MapDrawer::SetPointType(x, y, Obstacle);
@@ -62,6 +97,7 @@ void MapDrawer::DrawNodeMap(NodeMap* nodeMap)
 	}
 }
 
+// Draw robot as a circle on a given map
 void MapDrawer::DrawRobot(positionState pos, cv::Mat * map)
 {
 	float robot_i, robot_j;
@@ -72,18 +108,24 @@ void MapDrawer::DrawRobot(positionState pos, cv::Mat * map)
 	cv:circle(*map, *position,4,*color,1,8,0);
 }
 
+// Draw a path
 void MapDrawer::DrawPath(Node* goal)
 {
+	// Set the given node to be the end path
 	MapDrawer::SetPointType(goal->y , goal->x , PathEnd);
 
 	Node* currentNode = goal->parent;
+	
+	// Run over all the path
 	while(currentNode != NULL)
 	{
 		Node* nextNode = currentNode->parent;
-
+		
+		// If the next node was null, so the curr node is the start point
 		if(nextNode == NULL) {
 			MapDrawer::SetPointType(currentNode->y ,currentNode->x  , PathStart);
 		}
+		// If the node is a waypoint
 		else if(currentNode->isWaypoint)
 		{
 			MapDrawer::SetPointType(currentNode->y ,currentNode->x , Waypoint);
@@ -96,10 +138,10 @@ void MapDrawer::DrawPath(Node* goal)
 		currentNode = nextNode;
 	}
 
-	MapDrawer::SetPointType(goal->y ,goal->x , PathStart);
-
+	//MapDrawer::SetPointType(goal->y ,goal->x , PathStart);
 }
 
+// Draw the particle on the map
 double MapDrawer::DrawPatricles(std::vector<LocalizationParticle *>* particles)
 {
 	double bestParticalesAvrageBelief = 0;
@@ -123,6 +165,7 @@ double MapDrawer::DrawPatricles(std::vector<LocalizationParticle *>* particles)
 	return bestParticalesAvrageBelief / particalesCounter;
 }
 
+// Set the color of a point according to his point type
 void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
 {
 	switch(mapPointType)
@@ -184,6 +227,7 @@ void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
 	}
 }
 
+//Change the color of a point
 void MapDrawer::SetPointColor(int x, int y, int red, int green, int blue)
 {
 	if(x >= 0 && y >= 0)
@@ -194,27 +238,4 @@ void MapDrawer::SetPointColor(int x, int y, int red, int green, int blue)
 	}
 }
 
-void MapDrawer::Show(positionState robotPos)
-{
-	cv::Point2f center(ROBOT_START_X,ROBOT_START_Y);
-	cv::Mat resultMap;
-	cv::Mat scaled;
-
-	cv::Mat tempMap;
-	scaled = cv::getRotationMatrix2D(center, 0, 1.0);
-	cv::warpAffine(*_map, tempMap, scaled, _map->size());
-
-	DrawRobot(robotPos,&tempMap);
-
-	scaled = cv::getRotationMatrix2D(center, 0, 2.0);
-	cv::warpAffine(tempMap, resultMap, scaled, _map->size());
-
-	cv::imshow(MapDrawer::WINDOW_TITLE, resultMap);
-	cv::waitKey(100);
-}
-
-cv::Mat* MapDrawer::getMap()
-{
-	return _map;
-}
 
