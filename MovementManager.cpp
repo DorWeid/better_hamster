@@ -22,16 +22,24 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 	// While the distance from the wayPoint is bigger than the tolerance distance
 	while (distanceFromWaypoint > DISTANCE_FROM_WAYPOINT_TOLERANCE)
 	{
+		// The previous belified location of the robot is the current belifed location
 		robot->prevBeliefedLocation = robot->currBeliefedLocation;
+		
+		// recalculate the current location 
 		robot->realLocation = robot->currBeliefedLocation = robot->GetRealHamsterLocation();
+		
+		// Recalculate the delta between last angle and current angle
 		recalculateDeltaYaw();
-
+		
+		// Calculate the angle from the robot to the waypoint
 		calculateTargetYaw(waypoint);
 
+		// Check if the robot need to adjust is angle  
 		if (isRequiredAngleAdjustment())
 		{
 			cout << "Turning, targetYaw: " << targetYaw << " currYaw: " << robot->currBeliefedLocation.yaw << " deltaYaw: " << deltaYaw << " w: (" << waypoint->getX() << ", " << waypoint->getY() <<
 					") r: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
+			// Adjust the angle
 			turnToWaypoint();
 		}
 		else
@@ -39,51 +47,33 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 			cout << "Forward, waypoint: (" << waypoint->getX() << ", " << waypoint->getY() <<
 					") robot: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
 
+			// Move forward to the waypoint
 			moveToWaypoint();
 		}
 
+		// Recalculate distance from the wayPoint
 		recalculateDistanceFromWaypoint();
 		//mapDrawer->DrawRobot(robot->GetRealHamsterLocation());
+		
+		// Draw the location of the robot on the map
 		mapDrawer->Show(robot->GetRealHamsterLocation());
 		sleep(1.5);
 	}
 
+	// The waypoint has been reached
 	cout << "The waypoint: (" << waypoint->getX() << ", " << waypoint->getY() << ") has been reached" << endl;
+	
+	// Stop to move
 	stopMoving();
 
 	return;
 }
 
-
-void MovementManager::recalculateDeltaYaw()
+void MovementManager::recalculateDistanceFromWaypoint()
 {
-	// Is in circle
-	if((targetYaw > 360 - DELTA_ANGLE_TOL && robot->currBeliefedLocation.yaw < DELTA_ANGLE_TOL) ||
-	   (robot->currBeliefedLocation.yaw > 360 - DELTA_ANGLE_TOL && targetYaw < DELTA_ANGLE_TOL))
-	{
-		deltaYaw = fabs((targetYaw + robot->currBeliefedLocation.yaw) - 360);
-	}
-	else
-	{
-		deltaYaw = fabs(targetYaw - robot->currBeliefedLocation.yaw);
-	}
-}
-
-bool MovementManager::isRequiredAngleAdjustment()
-{
-	return !isDeltaAngleOnEndOfCiricle() && deltaYaw > YAW_TOLERANCE;
-}
-
-// Forward movement more stable
-bool MovementManager::isDeltaAngleOnEndOfCiricle() {
-	return (targetYaw > (360 - YAW_TOLERANCE) && robot->currBeliefedLocation.yaw < YAW_TOLERANCE) ||
-		   (robot->currBeliefedLocation.yaw > (360 - YAW_TOLERANCE) && targetYaw < YAW_TOLERANCE);
-}
-
-void MovementManager::calculateTargetYaw(Node* waypoint)
-{
-	targetYaw = getYawInOneCiricle(convertRadiansToDegrees(atan2((waypoint->getY() - robot->currBeliefedLocation.pos.y),
-																(waypoint->getX() - robot->currBeliefedLocation.pos.x))));
+	distanceFromWaypoint =
+		sqrt(pow(robot->currBeliefedLocation.pos.x - waypoint->getX(), 2) +
+			 pow(robot->currBeliefedLocation.pos.y - waypoint->getY(), 2));
 }
 
 void MovementManager::turnToWaypoint()
@@ -101,8 +91,10 @@ void MovementManager::stopMoving()
 	robot->setHamsterSpeed(0.0, 0.0);
 }
 
+// Calculate the turning direction
 double MovementManager::calculateTurningDirection()
 {
+	// If the robot 
 	if (robot->currBeliefedLocation.yaw > targetYaw)
 	{
 		if (360 - robot->currBeliefedLocation.yaw + targetYaw <
@@ -129,6 +121,7 @@ double MovementManager::calculateTurningDirection()
 	}
 }
 
+// Calculate the wheels angle according to delta yaw
 float MovementManager::calculateWheelsAngle()
 {
 	if(deltaYaw > MAX_WHEELS_ANGLE)
@@ -144,32 +137,69 @@ float MovementManager::calculateWheelsAngle()
 	return deltaYaw;
 }
 
-void MovementManager::recalculateDistanceFromWaypoint()
-{
-	distanceFromWaypoint =
-		sqrt(pow(robot->currBeliefedLocation.pos.x - waypoint->getX(), 2) +
-			 pow(robot->currBeliefedLocation.pos.y - waypoint->getY(), 2));
-}
-
+// Calculate the turn speed
 double MovementManager::calculateTurnSpeed()
 {
+	// Check the ratio beetween delta angle and target angle
 	double yawRatio = deltaYaw / targetYaw;
+	
+	// If the ratio is bigger than 1 then inverse deltayaw and targetyaw to get a ratio smaller than 1
 	if(yawRatio > 1)
 	{
+		// the ratio will be inverse
 		yawRatio = 1 / yawRatio;
 	}
 
+	// return a speed according to the previous ratio
 	return MIN_TURN_SPEED + ((MAX_TURN_SPEED - MIN_TURN_SPEED) *  yawRatio);
 }
 
+// Calculate the speed to go forward
 double MovementManager::calculateForwardSpeed()
 {
+	// If the distance is too far, return full speed
 	if (distanceFromWaypoint > MIN_DISTANCE_FOR_FULL_SPEED)
 	{
 		return MAX_MOVE_SPEED;
 	}
-
+	
+	// Return a speed according to the distance from the waypoint and a factor
 	return (double)distanceFromWaypoint / FORWARD_SPEED_FACTOR;
+}
+
+// Calculate the Delta of the target angle with the robot angle
+void MovementManager::recalculateDeltaYaw()
+{
+	// Is in circle
+	if((targetYaw > 360 - DELTA_ANGLE_TOL && robot->currBeliefedLocation.yaw < DELTA_ANGLE_TOL) ||
+	   (robot->currBeliefedLocation.yaw > 360 - DELTA_ANGLE_TOL && targetYaw < DELTA_ANGLE_TOL))
+	{
+		deltaYaw = fabs((targetYaw + robot->currBeliefedLocation.yaw) - 360);
+	}
+	else
+	{
+		deltaYaw = fabs(targetYaw - robot->currBeliefedLocation.yaw);
+	}
+}
+
+// Return if there is a need to adjust the angle of the robot
+bool MovementManager::isRequiredAngleAdjustment()
+{
+	// If the delta angle is bigger than the angle tolerance
+	return !isDeltaAngleOnEndOfCiricle() && deltaYaw > YAW_TOLERANCE;
+}
+
+// Forward movement more stable
+bool MovementManager::isDeltaAngleOnEndOfCiricle() {
+	return (targetYaw > (360 - YAW_TOLERANCE) && robot->currBeliefedLocation.yaw < YAW_TOLERANCE) ||
+		   (robot->currBeliefedLocation.yaw > (360 - YAW_TOLERANCE) && targetYaw < YAW_TOLERANCE);
+}
+
+// Calculate the angle of the waypoint angle
+void MovementManager::calculateTargetYaw(Node* waypoint)
+{
+	targetYaw = getYawInOneCiricle(convertRadiansToDegrees(atan2((waypoint->getY() - robot->currBeliefedLocation.pos.y),
+																(waypoint->getX() - robot->currBeliefedLocation.pos.x))));
 }
 
 MovementManager::~MovementManager() {
