@@ -1,10 +1,3 @@
-/*
- * MovementManager.h
- *
- *  Created on: Jul 2, 2017
- *      Author: user
- */
-
 #ifndef MOVEMENTMANAGER_H_
 #define MOVEMENTMANAGER_H_
 
