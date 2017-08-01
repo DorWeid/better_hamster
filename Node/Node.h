@@ -20,10 +20,12 @@ class Node
 		bool isInOpenList;
 		bool isInClosedList;
 
+		// the cost of the path from the start node to current node
 		double g;
 
-		// Heuristic value
+		// estimates the cost of the cheapest path from current node to goal node
 		double h;
+		// total weights of g and h
 		double f;
 
 		// Coordinates
