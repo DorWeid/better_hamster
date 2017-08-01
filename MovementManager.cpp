@@ -69,6 +69,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 	return;
 }
 
+// Calculate the distance to the waypoint
 void MovementManager::recalculateDistanceFromWaypoint()
 {
 	distanceFromWaypoint =
@@ -76,16 +77,19 @@ void MovementManager::recalculateDistanceFromWaypoint()
 			 pow(robot->currBeliefedLocation.pos.y - waypoint->getY(), 2));
 }
 
+// Turn to the waypoint
 void MovementManager::turnToWaypoint()
 {
 	robot->setHamsterSpeed(calculateTurnSpeed(), calculateTurningDirection());
 }
 
+// Move forward to the waypoint
 void MovementManager::moveToWaypoint()
 {
 	robot->setHamsterSpeed(calculateForwardSpeed(), 0.0);
 }
 
+// Stop moving the robot
 void MovementManager::stopMoving()
 {
 	robot->setHamsterSpeed(0.0, 0.0);
@@ -94,9 +98,10 @@ void MovementManager::stopMoving()
 // Calculate the turning direction
 double MovementManager::calculateTurningDirection()
 {
-	// If the robot 
+	// If the robot angle is bigger than the target angle
 	if (robot->currBeliefedLocation.yaw > targetYaw)
 	{
+		// Check if the robot needs to turn right or left according to wich turn will get to the target angle faster
 		if (360 - robot->currBeliefedLocation.yaw + targetYaw <
 					robot->currBeliefedLocation.yaw - targetYaw)
 		{
@@ -109,6 +114,7 @@ double MovementManager::calculateTurningDirection()
 	}
 	else
 	{
+		// Check if the robot needs to turn right or left according to wich turn will get to the target angle faster
 		if (360 - targetYaw + robot->currBeliefedLocation.yaw <
 					targetYaw - robot->currBeliefedLocation.yaw)
 		{
