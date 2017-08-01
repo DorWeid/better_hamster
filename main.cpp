@@ -79,10 +79,10 @@ void startRobotAction() {
  roomBlownMap.loadBlowMap(drawedMap);
 
  // Init the robot start and goal positions
- Node *startPos = roomBlownMap.getNodeAtIndex(ROBOT_START_X, ROBOT_START_Y);
- Node *goalPos = roomBlownMap.getNodeAtIndex(GOAL_X, GOAL_Y);
+ Node *startPos = roomBlownMap.getNodeByCoordinates(ROBOT_START_X, ROBOT_START_Y);
+ Node *goalPos = roomBlownMap.getNodeByCoordinates(GOAL_X, GOAL_Y);
 
- cout << "Is goal an obstacle: " << roomBlownMap.getNodeAtIndex(goalPos->x, goalPos->y)->isObstacle << endl;
+ cout << "Is goal an obstacle: " << roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle << endl;
 
  // Find the path
  pathPlanner->findShortestPath(&roomBlownMap,startPos,goalPos);

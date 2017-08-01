@@ -19,7 +19,7 @@ int NodeMap::getHeight() const
 	return _matrix[0].size();
 }
 
-Node* NodeMap::getNodeAtIndex(int x, int y) const
+Node* NodeMap::getNodeByCoordinates(int x, int y) const
 {
 	return _matrix[y][x];
 }
@@ -66,7 +66,7 @@ void NodeMap::loadBlowMap(cv::Mat* map)
 	robotSizeCm *= BLOW_ROBOT_FACTOR;
 
 	// Calculates the blow range
-	unsigned blowRange = NodeMap::calculateBlowRange(robotSizeCm, resolutionCm);
+	unsigned blowRange = NodeMap::calcBlowSize(robotSizeCm, resolutionCm);
 
 	// Looping to scan the original map
 	for (unsigned y = 0; y < mapHeight; y++)
@@ -99,14 +99,14 @@ void NodeMap::loadBlowMap(cv::Mat* map)
 
 }
 
-
+// Determines if (blown) area is actually an obstacle
 bool NodeMap::isAreaAnObstacle(int colIndex, int rowIndex, int resolution) const
 {
 	for (int i = colIndex * resolution; i < (colIndex * resolution) + resolution; i++)
 	{
 		for (int j = rowIndex * resolution; j < (rowIndex * resolution) + resolution; j++)
 		{
-			if (getNodeAtIndex(i, j)->isObstacle)
+			if (getNodeByCoordinates(i, j)->isObstacle)
 			{
 				return true;
 			}
@@ -116,54 +116,44 @@ bool NodeMap::isAreaAnObstacle(int colIndex, int rowIndex, int resolution) const
 	return false;
 }
 
-// Calculates the blow range from the robot size and resolution
-int NodeMap::calculateBlowRange(double robotSizeCm, double resolutionCm)
+// Simply calculate the size needed to blow the robot by
+int NodeMap::calcBlowSize(double robotSizeCm, double resolutionCm)
 {
-	int blowRange = ceil(robotSizeCm / resolutionCm);
-
-	return blowRange;
+	return ceil(robotSizeCm / resolutionCm);
 }
 
-// Calculates a rectangle that wraps the current index
-rectangle NodeMap::getCurrentRectangle(int blowRange, unsigned currX, unsigned currY, unsigned width, unsigned height)
+// Get the blown rectangle "wrapping" the given coordinates
+rectangle NodeMap::getCurrentRectangle(int blowRange, unsigned x, unsigned y, unsigned width, unsigned height)
 {
 	struct rectangle result;
 
-	// Gets the leftmost upmost index
-	int startingY = currY - blowRange;
+	// Top left
+	int startingY = y - blowRange;
+	int startingX = x - blowRange;
 
-	// Checks if out of bounds
+	// Bottom right
+	unsigned endingY = y + blowRange;
+	unsigned endingX = x + blowRange;
+
+	// Out of bounds checks
 	if (startingY < 0)
 	{
 		startingY = 0;
 	}
-
-	int startingX = currX - blowRange;
-
-	// Checks if out of bounds
 	if (startingX < 0)
 	{
 		startingX = 0;
 	}
-
-	// Gets the rightmost downmost index
-	unsigned endingY = currY + blowRange;
-
-	// Checks if out of bounds
 	if (endingY > height)
 	{
 		endingY = height;
 	}
-
-	unsigned endingX = currX + blowRange;
-
-	// Checks if out of bounds
 	if (endingX > width)
 	{
 		endingX = width;
 	}
 
-	// Setting the result
+	// Prepare structure
 	result.startingX = startingX;
 	result.startingY = startingY;
 	result.endingX = endingX;

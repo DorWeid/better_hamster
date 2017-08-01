@@ -53,7 +53,7 @@ void MapDrawer::DrawNodeMap(NodeMap* nodeMap)
 
 	for (int y = 0; y < height; y++) {
 	     for (int x = 0; x < width; x++) {
-	      if (nodeMap->getNodeAtIndex(y,x)->isObstacle)
+	      if (nodeMap->getNodeByCoordinates(y,x)->isObstacle)
 	      {
 	    	  MapDrawer::SetPointType(x, y, Obstacle);
 	      }

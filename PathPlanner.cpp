@@ -30,7 +30,7 @@ void PathPlanner::initializeHuristicValues(NodeMap* map, Node* goalNode)
 	{
 		for (int colIndex = 0; colIndex < map->getWidth(); colIndex++)
 		{
-			Node* currNode = map->getNodeAtIndex(colIndex, rowIndex);
+			Node* currNode = map->getNodeByCoordinates(colIndex, rowIndex);
 
 			if (!currNode->isObstacle)
 			{
@@ -57,7 +57,7 @@ void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 			// Checks if we're out of bounds and if the current neighbor is not an obstacle
 			if (colIndex >= 0 && rowIndex >= 0 &&
 				colIndex < map->getWidth() && rowIndex < map->getHeight() &&
-				!map->getNodeAtIndex(colIndex, rowIndex)->isObstacle)
+				!map->getNodeByCoordinates(colIndex, rowIndex)->isObstacle)
 			{
 				// Makes sure the current node is not scanned
 				if (colIndex != currNode->x || rowIndex != currNode->y)
@@ -66,7 +66,7 @@ void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 
 					//if (!isNodeInList(closedList, colIndex, rowIndex))
 					//{
-					Node* currNeighbor = map->getNodeAtIndex(colIndex, rowIndex);
+					Node* currNeighbor = map->getNodeByCoordinates(colIndex, rowIndex);
 
 					if (!currNeighbor->isInClosedList)
 					{
