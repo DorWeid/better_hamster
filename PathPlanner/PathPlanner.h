@@ -22,7 +22,7 @@ public:
 	void calculateNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 			set<Node*>* openList, set<Node*>* closedList);
 	void calculatePath(NodeMap* map, Node* startNode, Node* goalNode);
-	std::list<Node* > markWaypoints(Node * start, Node * currNode);
+	std::list<Node* > getWaypoints(Node * start, Node * currNode);
 
 private:
 	Node* getMinimalFNode(set<Node*>* openList);

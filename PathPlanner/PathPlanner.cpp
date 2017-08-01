@@ -26,6 +26,55 @@ void PathPlanner::calculatePath(NodeMap* map, Node* startingPosition, Node* targ
 	}
 }
 
+// creates the waypoint array, loops through the planned route and creates waypoitns
+std::list<Node* > PathPlanner::getWaypoints(Node * start, Node * currNode)
+{
+	std::list<Node* > waypoints;
+	Node* firstNode, *secondNode, *thirdNode;
+	firstNode = currNode;
+	secondNode = currNode->parent;
+	int skipped = 0;
+
+	// if theres no parent to the target goal, it cannot be reached from start point
+	if(secondNode == NULL)
+	{
+		return waypoints;
+	}
+
+	// runs until reaches start point
+	while (firstNode->x != start->x || firstNode->y != start->y)
+	{
+
+		thirdNode = secondNode->parent;
+
+		if(thirdNode == NULL)
+		{
+			waypoints.push_back(secondNode);
+			return waypoints;
+		}
+
+		// checks if the second node changes the direction slope
+		// if it does we need the create new waypoint
+		if((getSlope(firstNode,secondNode) != getSlope(secondNode,thirdNode)) ||
+				skipped >= WAYPOINT_TOLERENCE)
+		{
+			secondNode->isWaypoint = true;
+			waypoints.push_back(secondNode);
+			skipped = 0;
+		}
+		else
+		{
+			skipped++;
+		}
+
+
+		firstNode = secondNode;
+		secondNode = thirdNode;
+	}
+
+	return waypoints;
+}
+
 void PathPlanner::initializeHuristicValues(NodeMap* map, Node* goalNode)
 {
 	for (int rowIndex = 0; rowIndex < map->getHeight(); rowIndex++)
@@ -116,6 +165,7 @@ Node* PathPlanner::getMinimalFNode(set<Node*>* openList)
 	// starts as the first node
 	Node* minNode = *(openList->begin());
 
+	// iterates the open list and searches for the lowest f value
 	for (set<Node*>::iterator iter = openList->begin(); iter != openList->end(); iter++)
 	{
 		if ((*iter)->f < minNode->f)
@@ -127,49 +177,7 @@ Node* PathPlanner::getMinimalFNode(set<Node*>* openList)
 	return minNode;
 }
 
-std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
-{
-	std::list<Node* > waypoints;
-	Node* firstNode, *secondNode, *thirdNode;
-	firstNode = currNode;
-	secondNode = currNode->parent;
-	int skipCounter = 0;
 
-	if(secondNode == NULL)
-	{
-		return waypoints;
-	}
-
-	while (firstNode->x != start->x || firstNode->y != start->y)
-	{
-
-		thirdNode = secondNode->parent;
-
-		if(thirdNode == NULL)
-		{
-			waypoints.push_back(secondNode);
-			return waypoints;
-		}
-
-		if((getSlope(firstNode,secondNode) != getSlope(secondNode,thirdNode)) ||
-				skipCounter >= WAYPOINT_TOLERENCE)
-		{
-			secondNode->isWaypoint = true;
-			waypoints.push_back(secondNode);
-			skipCounter = 0;
-		}
-		else
-		{
-			skipCounter++;
-		}
-
-
-		firstNode = secondNode;
-		secondNode = thirdNode;
-	}
-
-	return waypoints;
-}
 
 // returns the slope between two nodes
 double PathPlanner::getSlope(Node *a, Node * b)
