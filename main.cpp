@@ -1,7 +1,7 @@
 #include <HamsterAPIClientCPP/Hamster.h>
 #include <iostream>
 #include "NodeMap/NodeMap.h"
-#include "PathPlanner.h"
+#include "PathPlanner/PathPlanner.h"
 #include <stdlib.h>
 #include "Gui/MapDrawer.h"
 #include "Localization/LocalizationManager.h"
@@ -85,7 +85,7 @@ void startRobotAction() {
  cout << "Is goal an obstacle: " << roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle << endl;
 
  // Find the path
- pathPlanner->findShortestPath(&roomBlownMap,startPos,goalPos);
+ pathPlanner->calculatePath(&roomBlownMap,startPos,goalPos);
 
  // Mark the waypoints
  std::list<Node* > waypoints = pathPlanner->markWaypoints(startPos, goalPos);

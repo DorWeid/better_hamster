@@ -10,7 +10,7 @@ void PathPlanner::calculatePath(NodeMap* map, Node* startingPosition, Node* targ
 
 	initializeHuristicValues(map, targetPosition);
 	closedList.insert(startingPosition);
-	startNode->isInClosedList = true;
+	startingPosition->isInClosedList = true;
 	calculateNeighbors(map, startingPosition, targetPosition, &openList, &closedList);
 
 	while(!openList.empty())
@@ -61,12 +61,12 @@ void PathPlanner::calculateNeighbors(NodeMap* map, Node* currNode, Node* targetN
 			// checks if we reached the bounds or the node is obstacle
 			if (rowIndex >= 0 && colIndex >= 0 &&  
 				colIndex < map->getWidth() && rowIndex < map->getHeight() &&
-				!map->getNodeAtIndex(colIndex, rowIndex)->isObstacle)
+				!map->getNodeByCoordinates(colIndex, rowIndex)->isObstacle)
 			{
 				// we dont check the current node
 				if (colIndex != currNode->x || rowIndex != currNode->y)
 				{
-					Node* currNeighbor = map->getNodeAtIndex(colIndex, rowIndex);
+					Node* currNeighbor = map->getNodeByCoordinates(colIndex, rowIndex);
 					
 					// checks if the neighbor is not in the closed list
 					if (!currNeighbor->isInClosedList)
@@ -96,11 +96,11 @@ void PathPlanner::calculateNeighbors(NodeMap* map, Node* currNode, Node* targetN
 						// check if we found a shorter path since the node is already in the open list
 						else
 						{
-							if (gCost < currNeighbor->getG())
+							if (gCost < currNeighbor->g)
 							{
 								// updates the cost and the parent node
-								currNeighbor->g = tempGCost;
-								currNeighbor->f = currNeighbor->h + tempGCost;
+								currNeighbor->g = gCost;
+								currNeighbor->f = currNeighbor->h + gCost;
 								currNeighbor->parent = currNode;
 							}
 						}
