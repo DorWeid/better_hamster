@@ -8,9 +8,9 @@
 #ifndef MOVEMENTMANAGER_H_
 #define MOVEMENTMANAGER_H_
 
-#include "Robot/Robot.h"
+#include "./Utils/AngleUtils.h"
 #include "HamsterAPIClientCPP/Hamster.h"
-#include "Utils/AngleUtils.h"
+#include "../Robot/Robot.h"
 #include <vector>
 #include <math.h>
 #include "Constants.h"
