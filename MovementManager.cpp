@@ -3,19 +3,23 @@
 #include <stdlib.h>
 #include <sstream>
 
-MovementManager::MovementManager(Robot * robot, MapDrawer* mapDrawer)
+MovementManager::MovementManager(Robot * robot, MapDrawer* mapDrawer) : 
+				robot(robot), mapDrawer(mapDrawer)
 {
-	this->robot = robot;
-	this->mapDrawer = mapDrawer;
 }
 
+// Navigate to a waypoint
 void MovementManager::NavigateToWaypoint(Node* waypoint)
 {
 	this->waypoint = waypoint;
+	
+	// Calculate the robot location 
 	robot->realLocation = robot->prevBeliefedLocation = robot->currBeliefedLocation = robot->GetRealHamsterLocation();
 
+	// According to the location of the robot calculate the distance from the waypoint
 	recalculateDistanceFromWaypoint();
 
+	// While the distance from the wayPoint is bigger than the tolerance distance
 	while (distanceFromWaypoint > DISTANCE_FROM_WAYPOINT_TOLERANCE)
 	{
 		robot->prevBeliefedLocation = robot->currBeliefedLocation;
