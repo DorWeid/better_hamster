@@ -1,3 +1,7 @@
+/**
+ * This class responsible to draw the map on the UI 
+ */
+
 #ifndef GUI_MAPDRAWER_H_
 #define GUI_MAPDRAWER_H_
 
@@ -28,10 +32,7 @@ enum MapPointType {
 };
 
 class MapDrawer {
-private:
-	const string WINDOW_TITLE;
-	cv::Mat* _map;
-	void SetPointColor(int x, int y, int red, int green, int blue);
+
 public:
 	MapDrawer(int width, int height);
 
@@ -44,6 +45,11 @@ public:
 	double DrawPatricles(std::vector<LocalizationParticle *>* particles);
 	cv::Mat* getMap();
 	//void DrawLidarScan(std::vector<positionState> obstacles);
+private:
+	const string WINDOW_TITLE;
+	cv::Mat* _map;
+	void SetPointColor(int x, int y, int red, int green, int blue);
+
 };
 
 #endif /* GUI_MAPDRAWER_H_ */
