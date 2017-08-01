@@ -3,6 +3,7 @@
 #include <math.h>
 #include "../Node/Node.h"
 #include "Constants.h"
+#include "Position.h"
 #include "Structures.h"
 
 Node ConvertToHamsterLocation(Node* waypoint)

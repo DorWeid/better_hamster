@@ -7,10 +7,10 @@
 #include "Localization/LocalizationManager.h"
 #include "Robot/Robot.h"
 #include "MovementManager/MovementManager.h"
-#include "Helpers/PositionUtils.h"
 #include "math.h"
 
-#include "Helpers/PositionUtils.h"
+#include "Helpers/Position.h"
+#include "Helpers/Position.h"
 #include "Helpers/Structures.h"
 
 using namespace std;

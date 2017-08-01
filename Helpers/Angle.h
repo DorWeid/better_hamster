@@ -1,5 +1,5 @@
-#ifndef ANGLEUTILS_H_
-#define ANGLEUTILS_H_
+#ifndef ANGLE_H_
+#define ANGLE_H_
 
 #include <math.h>
 #include <HamsterAPIClientCPP/Hamster.h>

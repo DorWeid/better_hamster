@@ -1,13 +1,12 @@
 #ifndef MOVEMENTMANAGER_H_
 #define MOVEMENTMANAGER_H_
 
-#include "../Helpers/AngleUtils.h"
+#include "../Helpers/Angle.h"
 #include "HamsterAPIClientCPP/Hamster.h"
 #include "../Robot/Robot.h"
 #include <vector>
 #include <math.h>
 #include "../Helpers/Constants.h"
-#include "../Helpers/AngleUtils.h"
 #include "../Robot/Robot.h"
 using namespace std;
 using namespace HamsterAPI;

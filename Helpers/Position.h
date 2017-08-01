@@ -5,13 +5,13 @@
  *      Author: user
  */
 
-#ifndef HELPERS_POSITIONUTILS_H_
-#define HELPERS_POSITIONUTILS_H_
-#include "PositionUtils.h"
+#ifndef HELPERS_POSITION_H_
+#define HELPERS_POSITION_H_
+
 #include "Structures.h"
 #include <math.h>
 #include "../Node/Node.h"
 
 Node ConvertToHamsterLocation(Node* waypoint);
 
-#endif /* HELPERS_POSITIONUTILS_H_ */
+#endif /* HELPERS_POSITION_H_ */

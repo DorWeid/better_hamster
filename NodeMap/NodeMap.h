@@ -10,7 +10,7 @@
 #include <HamsterAPIClientCPP/Hamster.h>
 #include "../Node/Node.h"
 #include "../Helpers/Constants.h"
-#include "../Helpers/PositionUtils.h"
+#include "../Helpers/Position.h"
 #include "../Helpers/Structures.h"
 
 using namespace std;
