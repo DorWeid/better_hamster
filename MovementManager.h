@@ -21,6 +21,11 @@ using namespace HamsterAPI;
 
 class MovementManager
 {
+	
+public:
+	MovementManager(Robot * robot, MapDrawer* mapDrawer);
+	void NavigateToWaypoint(Node * waypoint);
+	virtual ~MovementManager();
 private:
 	Robot * robot;
 	MapDrawer* mapDrawer;
@@ -28,24 +33,19 @@ private:
 	double distanceFromWaypoint;
 	double targetYaw, deltaYaw;
 
-	void turnToWaypoint();
-	void moveToWaypoint();
+	void turnToTarget();
+	void moveForward();
 	double GetAdjustedYaw(double yawToAdjust) const;
 	double calculateTurningDirection();
-	void recalculateDistanceFromWaypoint();
+	void recalculateDistanceFromTarget();
 	double calculateTurnSpeed();
 	double calculateForwardSpeed();
-	bool isRequiredAngleAdjustment();
+	bool isNeedAngleAdjustment();
 	bool isDeltaAngleOnEndOfCiricle();
 	float calculateWheelsAngle();
 	void calculateTargetYaw(Node* waypoint);
 	void stopMoving();
 	void recalculateDeltaYaw();
-
-public:
-	MovementManager(Robot * robot, MapDrawer* mapDrawer);
-	void NavigateToWaypoint(Node * waypoint);
-	virtual ~MovementManager();
 };
 
 #endif /* MOVEMENTMANAGER_H_ */
