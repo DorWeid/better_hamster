@@ -35,6 +35,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1311615006" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.100261973" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="HamsterAPICommon"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="CogniAlgCPP"/>
 									<listOptionValue builtIn="false" value="HamsterAPIClientCPP"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
@@ -88,13 +89,15 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1892913542" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.1471125046" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="HamsterAPICommon"/>
-									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="CogniAlgCPP"/>
 									<listOptionValue builtIn="false" value="HamsterAPIClientCPP"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
 								</option>
+<<<<<<< HEAD
+=======
 								<option id="gnu.cpp.link.option.paths.1920409500" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths"/>
+>>>>>>> 68db6a47bc471cf592198029524662818feebb0c
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1956533258" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -139,4 +142,5 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>
