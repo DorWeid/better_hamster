@@ -1,15 +1,17 @@
 #include "PathPlanner.h"
 
-void PathPlanner::findShortestPath(NodeMap* map, Node* startNode, Node* goalNode)
-{
+// Gets the map, starting position and target position
+// Returns the shortest path
+void PathPlanner::calculatePath(NodeMap* map, Node* startingPosition, Node* targetPosition)
+{	
 	set<Node*> openList;
 	set<Node*> closedList;
 	Node* currNode;
 
-	initializeHuristicValues(map, goalNode);
-	closedList.insert(startNode);
+	initializeHuristicValues(map, targetPosition);
+	closedList.insert(startingPosition);
 	startNode->isInClosedList = true;
-	handleNeighbors(map, startNode, goalNode, &openList, &closedList);
+	calculateNeighbors(map, startingPosition, targetPosition, &openList, &closedList);
 
 	while(!openList.empty())
 	{
@@ -20,7 +22,7 @@ void PathPlanner::findShortestPath(NodeMap* map, Node* startNode, Node* goalNode
 		closedList.insert(currNode);
 		currNode->isInClosedList = true;
 
-		handleNeighbors(map, currNode, goalNode, &openList, &closedList);
+		calculateNeighbors(map, currNode, targetPosition, &openList, &closedList);
 	}
 }
 
@@ -40,62 +42,63 @@ void PathPlanner::initializeHuristicValues(NodeMap* map, Node* goalNode)
 	}
 }
 
-double PathPlanner::calculateDistance(Node* source, Node* target)
+// Calculates the distance between two nodes
+double PathPlanner::calculateDistance(Node* start, Node* target)
 {
-	return sqrt(pow(source->x - target->x, 2) + pow(source->y - target->y, 2));
+	return sqrt(pow(start->x - target->x, 2) + pow(start->y - target->y, 2));
 }
 
-void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
+// calculates the cost of the surrounding cells and updates the path as well
+void PathPlanner::calculateNeighbors(NodeMap* map, Node* currNode, Node* targetNode,
 		set<Node*>* openList, set<Node*>* closedList)
 {
+	// runs through the rows behind and after current node
 	for (int rowIndex = currNode->y - 1; rowIndex <= currNode->y + 1; rowIndex++)
 	{
+		// runs through the cols behind and after current node
 		for (int colIndex = currNode->x - 1; colIndex <= currNode->x + 1; colIndex++)
 		{
-			//cout << "X: " << colIndex << " Y: " << rowIndex << endl;
-
-			// Checks if we're out of bounds and if the current neighbor is not an obstacle
-			if (colIndex >= 0 && rowIndex >= 0 &&
+			// checks if we reached the bounds or the node is obstacle
+			if (rowIndex >= 0 && colIndex >= 0 &&  
 				colIndex < map->getWidth() && rowIndex < map->getHeight() &&
-				!map->getNodeByCoordinates(colIndex, rowIndex)->isObstacle)
+				!map->getNodeAtIndex(colIndex, rowIndex)->isObstacle)
 			{
-				// Makes sure the current node is not scanned
+				// we dont check the current node
 				if (colIndex != currNode->x || rowIndex != currNode->y)
 				{
-					// Checks if the current neighbor is in the closed list
-
-					//if (!isNodeInList(closedList, colIndex, rowIndex))
-					//{
-					Node* currNeighbor = map->getNodeByCoordinates(colIndex, rowIndex);
-
+					Node* currNeighbor = map->getNodeAtIndex(colIndex, rowIndex);
+					
+					// checks if the neighbor is not in the closed list
 					if (!currNeighbor->isInClosedList)
 					{
-						double tempGCost =
+						double gCost =
 							calculateDistance(currNode, currNeighbor) + currNode->g;
 
-						// Checks if the current neighbor is already in the open list
+						// Checks if the current neighbor is not in the open list
 						if (!currNeighbor->isInOpenList)
 						{
-							currNeighbor->g = tempGCost;
-							currNeighbor->f = currNeighbor->h + tempGCost;
+							currNeighbor->g = gCost;
+							currNeighbor->f = currNeighbor->h + gCost;
 							currNeighbor->parent = currNode;
 
 							// Checking if we have reached the goal
-							if (goalNode->x == colIndex && goalNode->y == rowIndex)
+							if (targetNode->x == colIndex && targetNode->y == rowIndex)
 							{
+								// clears the openList and done with checking the nodes
 								openList->clear();
 								return;
 							}
 
-							// Adding the node to the open list for the first time
+							// Adding the node to the open list
 							openList->insert(currNeighbor);
 							currNeighbor->isInOpenList = true;
 						}
-						// The node was already in the open list, check if we found a shorter path
+						// check if we found a shorter path since the node is already in the open list
 						else
 						{
-							if (tempGCost < currNeighbor->g)
+							if (gCost < currNeighbor->getG())
 							{
+								// updates the cost and the parent node
 								currNeighbor->g = tempGCost;
 								currNeighbor->f = currNeighbor->h + tempGCost;
 								currNeighbor->parent = currNode;
@@ -110,16 +113,14 @@ void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 
 Node* PathPlanner::getMinimalFNode(set<Node*>* openList)
 {
+	// starts as the first node
 	Node* minNode = *(openList->begin());
-	Node* currNode;
 
 	for (set<Node*>::iterator iter = openList->begin(); iter != openList->end(); iter++)
 	{
-		currNode = *iter;
-
-		if (currNode->f < minNode->f)
+		if ((*iter)->f < minNode->f)
 		{
-			minNode = currNode;
+			minNode = *iter;
 		}
 	}
 
@@ -150,7 +151,7 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 			return waypoints;
 		}
 
-		if((getShipua(firstNode,secondNode) != getShipua(secondNode,thirdNode)) ||
+		if((getSlope(firstNode,secondNode) != getSlope(secondNode,thirdNode)) ||
 				skipCounter >= WAYPOINT_TOLERENCE)
 		{
 			secondNode->isWaypoint = true;
@@ -170,8 +171,10 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 	return waypoints;
 }
 
-double PathPlanner::getShipua(Node *a, Node * b)
+// returns the slope between two nodes
+double PathPlanner::getSlope(Node *a, Node * b)
 {
+	// checks if there's slope
 	if (b->x - a->x == 0)
 		return 0;
 
