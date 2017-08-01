@@ -37,14 +37,14 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 		// Check if the robot need to adjust is angle  
 		if (isNeedAngleAdjustment())
 		{
-			cout << "Turning, targetYaw: " << targetYaw << " currYaw: " << robot->currBeliefedLocation.yaw << " deltaYaw: " << deltaYaw << " w: (" << waypoint->getX() << ", " << waypoint->getY() <<
+			cout << "Turning, targetYaw: " << targetYaw << " currYaw: " << robot->currBeliefedLocation.yaw << " deltaYaw: " << deltaYaw << " w: (" << waypoint->x << ", " << waypoint->y <<
 					") r: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
 			// Adjust the angle
 			turnToTarget();
 		}
 		else
 		{
-			cout << "Forward, waypoint: (" << waypoint->getX() << ", " << waypoint->getY() <<
+			cout << "Forward, waypoint: (" << waypoint->x << ", " << waypoint->y <<
 					") robot: (" << robot->currBeliefedLocation.pos.x << ", " << robot->currBeliefedLocation.pos.y << ")" << endl;
 
 			// Move forward to the waypoint
@@ -61,7 +61,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 	}
 
 	// The waypoint has been reached
-	cout << "The waypoint: (" << waypoint->getX() << ", " << waypoint->getY() << ") has been reached" << endl;
+	cout << "The waypoint: (" << waypoint->x << ", " << waypoint->y << ") has been reached" << endl;
 	
 	// Stop to move
 	stopMoving();
@@ -73,8 +73,8 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 void MovementManager::recalculateDistanceFromTarget()
 {
 	distanceFromWaypoint =
-		sqrt(pow(robot->currBeliefedLocation.pos.x - waypoint->getX(), 2) +
-			 pow(robot->currBeliefedLocation.pos.y - waypoint->getY(), 2));
+		sqrt(pow(robot->currBeliefedLocation.pos.x - waypoint->x, 2) +
+			 pow(robot->currBeliefedLocation.pos.y - waypoint->y, 2));
 }
 
 // Turn to the waypoint
@@ -204,8 +204,8 @@ bool MovementManager::isDeltaAngleOnEndOfCiricle() {
 // Calculate the angle of the waypoint angle
 void MovementManager::calculateTargetYaw(Node* waypoint)
 {
-	targetYaw = getYawInOneCiricle(convertRadiansToDegrees(atan2((waypoint->getY() - robot->currBeliefedLocation.pos.y),
-																(waypoint->getX() - robot->currBeliefedLocation.pos.x))));
+	targetYaw = getYawInOneCiricle(convertRadiansToDegrees(atan2((waypoint->y - robot->currBeliefedLocation.pos.y),
+																(waypoint->x - robot->currBeliefedLocation.pos.x))));
 }
 
 MovementManager::~MovementManager() {

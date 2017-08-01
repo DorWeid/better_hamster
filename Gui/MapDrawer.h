@@ -3,7 +3,7 @@
 
 #include <HamsterAPIClientCPP/Hamster.h>
 #include "MapPointType.cpp"
-#include "../NodeMap/Node.h"
+#include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
 #include "../Localization/LocalizationParticle.h"
 #include "../Helpers/PositionUtils.h"

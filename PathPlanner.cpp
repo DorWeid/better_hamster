@@ -8,7 +8,7 @@ void PathPlanner::findShortestPath(NodeMap* map, Node* startNode, Node* goalNode
 
 	initializeHuristicValues(map, goalNode);
 	closedList.insert(startNode);
-	startNode->setIsInClosedList(true);
+	startNode->isInClosedList = true;
 	handleNeighbors(map, startNode, goalNode, &openList, &closedList);
 
 	while(!openList.empty())
@@ -16,12 +16,11 @@ void PathPlanner::findShortestPath(NodeMap* map, Node* startNode, Node* goalNode
 		currNode = getMinimalFNode(&openList);
 
 		openList.erase(currNode);
-		currNode->setIsInOpenList(false);
+		currNode->isInOpenList = false;
 		closedList.insert(currNode);
-		currNode->setIsInClosedList(true);
+		currNode->isInClosedList = true;
 
 		handleNeighbors(map, currNode, goalNode, &openList, &closedList);
-
 	}
 }
 
@@ -33,9 +32,9 @@ void PathPlanner::initializeHuristicValues(NodeMap* map, Node* goalNode)
 		{
 			Node* currNode = map->getNodeAtIndex(colIndex, rowIndex);
 
-			if (!currNode->getIsObstacle())
+			if (!currNode->isObstacle)
 			{
-				currNode->setH(calculateDistance(currNode, goalNode));
+				currNode->h = calculateDistance(currNode, goalNode);
 			}
 		}
 	}
@@ -43,25 +42,25 @@ void PathPlanner::initializeHuristicValues(NodeMap* map, Node* goalNode)
 
 double PathPlanner::calculateDistance(Node* source, Node* target)
 {
-	return sqrt(pow(source->getX() - target->getX(), 2) + pow(source->getY() - target->getY(), 2));
+	return sqrt(pow(source->x - target->x, 2) + pow(source->y - target->y, 2));
 }
 
 void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 		set<Node*>* openList, set<Node*>* closedList)
 {
-	for (int rowIndex = currNode->getY() - 1; rowIndex <= currNode->getY() + 1; rowIndex++)
+	for (int rowIndex = currNode->y - 1; rowIndex <= currNode->y + 1; rowIndex++)
 	{
-		for (int colIndex = currNode->getX() - 1; colIndex <= currNode->getX() + 1; colIndex++)
+		for (int colIndex = currNode->x - 1; colIndex <= currNode->x + 1; colIndex++)
 		{
 			//cout << "X: " << colIndex << " Y: " << rowIndex << endl;
 
 			// Checks if we're out of bounds and if the current neighbor is not an obstacle
 			if (colIndex >= 0 && rowIndex >= 0 &&
 				colIndex < map->getWidth() && rowIndex < map->getHeight() &&
-				!map->getNodeAtIndex(colIndex, rowIndex)->getIsObstacle())
+				!map->getNodeAtIndex(colIndex, rowIndex)->isObstacle)
 			{
 				// Makes sure the current node is not scanned
-				if (colIndex != currNode->getX() || rowIndex != currNode->getY())
+				if (colIndex != currNode->x || rowIndex != currNode->y)
 				{
 					// Checks if the current neighbor is in the closed list
 
@@ -69,20 +68,20 @@ void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 					//{
 					Node* currNeighbor = map->getNodeAtIndex(colIndex, rowIndex);
 
-					if (!currNeighbor->getIsInClosedList())
+					if (!currNeighbor->isInClosedList)
 					{
 						double tempGCost =
-							calculateDistance(currNode, currNeighbor) + currNode->getG();
+							calculateDistance(currNode, currNeighbor) + currNode->g;
 
 						// Checks if the current neighbor is already in the open list
-						if (!currNeighbor->getIsInOpenList())
+						if (!currNeighbor->isInOpenList)
 						{
-							currNeighbor->setG(tempGCost);
-							currNeighbor->setF(currNeighbor->getH() + tempGCost);
-							currNeighbor->setParent(currNode);
+							currNeighbor->g = tempGCost;
+							currNeighbor->f = currNeighbor->h + tempGCost;
+							currNeighbor->parent = currNode;
 
 							// Checking if we have reached the goal
-							if (goalNode->getX() == colIndex && goalNode->getY() == rowIndex)
+							if (goalNode->x == colIndex && goalNode->y == rowIndex)
 							{
 								openList->clear();
 								return;
@@ -90,16 +89,16 @@ void PathPlanner::handleNeighbors(NodeMap* map, Node* currNode, Node* goalNode,
 
 							// Adding the node to the open list for the first time
 							openList->insert(currNeighbor);
-							currNeighbor->setIsInOpenList(true);
+							currNeighbor->isInOpenList = true;
 						}
 						// The node was already in the open list, check if we found a shorter path
 						else
 						{
-							if (tempGCost < currNeighbor->getG())
+							if (tempGCost < currNeighbor->g)
 							{
-								currNeighbor->setG(tempGCost);
-								currNeighbor->setF(currNeighbor->getH() + tempGCost);
-								currNeighbor->setParent(currNode);
+								currNeighbor->g = tempGCost;
+								currNeighbor->f = currNeighbor->h + tempGCost;
+								currNeighbor->parent = currNode;
 							}
 						}
 					}
@@ -118,7 +117,7 @@ Node* PathPlanner::getMinimalFNode(set<Node*>* openList)
 	{
 		currNode = *iter;
 
-		if (currNode->getF() < minNode->getF())
+		if (currNode->f < minNode->f)
 		{
 			minNode = currNode;
 		}
@@ -132,7 +131,7 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 	std::list<Node* > waypoints;
 	Node* firstNode, *secondNode, *thirdNode;
 	firstNode = currNode;
-	secondNode = currNode->getParent();
+	secondNode = currNode->parent;
 	int skipCounter = 0;
 
 	if(secondNode == NULL)
@@ -140,10 +139,10 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 		return waypoints;
 	}
 
-	while (firstNode->getX() != start->getX() || firstNode->getY() != start->getY())
+	while (firstNode->x != start->x || firstNode->y != start->y)
 	{
 
-		thirdNode = secondNode->getParent();
+		thirdNode = secondNode->parent;
 
 		if(thirdNode == NULL)
 		{
@@ -154,7 +153,7 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 		if((getShipua(firstNode,secondNode) != getShipua(secondNode,thirdNode)) ||
 				skipCounter >= WAYPOINT_TOLERENCE)
 		{
-			secondNode->setIsWaypoint(true);
+			secondNode->isWaypoint = true;
 			waypoints.push_back(secondNode);
 			skipCounter = 0;
 		}
@@ -173,10 +172,10 @@ std::list<Node* > PathPlanner::markWaypoints(Node * start, Node * currNode)
 
 double PathPlanner::getShipua(Node *a, Node * b)
 {
-	if (b->getX() - a->getX() == 0)
+	if (b->x - a->x == 0)
 		return 0;
 
-	return (b->getY() - a->getY()) / (b->getX() - a->getX());
+	return (b->y - a->y) / (b->x - a->x);
 }
 
 

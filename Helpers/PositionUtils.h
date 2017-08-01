@@ -10,7 +10,7 @@
 #include "PositionUtils.h"
 #include "Structures.h"
 #include <math.h>
-#include "../NodeMap/Node.h"
+#include "../Node/Node.h"
 
 Node ConvertToHamsterLocation(Node* waypoint);
 

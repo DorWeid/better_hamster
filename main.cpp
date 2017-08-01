@@ -31,8 +31,8 @@ int main() {
 bool isWaypointReached(const positionState& currLocation,
 		const Node& hamsterWaypoint) {
 	double distanceFromWaypoint = sqrt(
-			pow(currLocation.pos.x - hamsterWaypoint.getX(), 2)
-					+ pow(currLocation.pos.y - hamsterWaypoint.getY(), 2));
+			pow(currLocation.pos.x - hamsterWaypoint.x, 2)
+					+ pow(currLocation.pos.y - hamsterWaypoint.y, 2));
 
 	return distanceFromWaypoint <= DISTANCE_FROM_WAYPOINT_TOLERANCE;
 }
@@ -82,7 +82,7 @@ void startRobotAction() {
  Node *startPos = roomBlownMap.getNodeAtIndex(ROBOT_START_X, ROBOT_START_Y);
  Node *goalPos = roomBlownMap.getNodeAtIndex(GOAL_X, GOAL_Y);
 
- cout << "Is goal an obstacle: " << roomBlownMap.getNodeAtIndex(goalPos->getX(), goalPos->getY())->getIsObstacle() << endl;
+ cout << "Is goal an obstacle: " << roomBlownMap.getNodeAtIndex(goalPos->x, goalPos->y)->isObstacle << endl;
 
  // Find the path
  pathPlanner->findShortestPath(&roomBlownMap,startPos,goalPos);
@@ -125,7 +125,7 @@ if(hamster->isConnected()) {
 
 		if (isWaypointReached(robot.currBeliefedLocation, hamsterWaypoint))
 		{
-			cout << endl << "Reached waypoint (" << hamsterWaypoint.getX() << ", " << hamsterWaypoint.getY() << ")" << endl << endl;
+			cout << endl << "Reached waypoint (" << hamsterWaypoint.x << ", " << hamsterWaypoint.y << ")" << endl << endl;
 		}
 		else
 		{

@@ -8,7 +8,7 @@
 
 #include <HamsterAPIClientCPP/Hamster.h>
 #include <math.h>
-#include "../NodeMap/Node.h"
+#include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
 #include "../Gui/MapDrawer.h"
 #include "../Helpers/Constants.h"
@@ -43,8 +43,9 @@ class Robot
 		// Localization manager instance
 		LocalizationManager * localizationManager;
 
-		//
-		double resolution, mapHeight, mapWidth;
+		double mapHeight;
+		double mapWidth;
+		double resolution;
 };
 
 #endif /* ROBOT_H_ */

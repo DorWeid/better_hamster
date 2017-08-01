@@ -37,7 +37,7 @@ void NodeMap::loadMap(cv::Mat* map)
 			matrix[y][x] = new Node(x, y);
 
 			cv::Vec3b coloredPoint = map->at<cv::Vec3b>(y, x);
-			matrix[y][x]->setIsObstacle(coloredPoint[0] == 0 && coloredPoint[1] == 0 && coloredPoint[2] == 0);
+			matrix[y][x]->isObstacle = (coloredPoint[0] == 0 && coloredPoint[1] == 0 && coloredPoint[2] == 0);
 		}
 	}
 	_matrix = matrix;
@@ -74,7 +74,7 @@ void NodeMap::loadBlowMap(cv::Mat* map)
 		for (unsigned x = 0; x < mapWidth; x++)
 		{
 			// Checks if the original node is obstacle
-			if (_matrix[y][x]->getIsObstacle())
+			if (_matrix[y][x]->isObstacle)
 			{
 				obstacles.push_front(_matrix[y][x]);
 			}
@@ -83,20 +83,18 @@ void NodeMap::loadBlowMap(cv::Mat* map)
 
 	std::list<Node*>::const_iterator iterator;
 	for (iterator = obstacles.begin(); iterator != obstacles.end(); ++iterator) {
+		// Calculates a rectangle to set as obstacles around the current node
+		currRec = getCurrentRectangle(blowRange, (*iterator)->x, (*iterator)->y, mapWidth, mapHeight);
 
-			// Calculates a rectangle to set as obstacles around the current node
-					currRec = getCurrentRectangle(blowRange, (*iterator)->getX(), (*iterator)->getY(),
-							mapWidth, mapHeight);
-
-					// Loops to set the neighbors in the blow range as obstacles
-					for (unsigned neighborY = currRec.startingY; neighborY < currRec.endingY; neighborY++)
-					{
-						for (unsigned neighborX = currRec.startingX; neighborX < currRec.endingX; neighborX++)
-						{
-							// Sets the current neighbor node as obstacle obstacle
-							_matrix[neighborY][neighborX]->setIsObstacle(true);
-						}
-					}
+		// Loops to set the neighbors in the blow range as obstacles
+		for (unsigned neighborY = currRec.startingY; neighborY < currRec.endingY; neighborY++)
+		{
+			for (unsigned neighborX = currRec.startingX; neighborX < currRec.endingX; neighborX++)
+			{
+				// Sets the current neighbor node as obstacle obstacle
+				_matrix[neighborY][neighborX]->isObstacle = true;
+			}
+		}
 	}
 
 }
@@ -108,7 +106,7 @@ bool NodeMap::isAreaAnObstacle(int colIndex, int rowIndex, int resolution) const
 	{
 		for (int j = rowIndex * resolution; j < (rowIndex * resolution) + resolution; j++)
 		{
-			if (getNodeAtIndex(i, j)->getIsObstacle())
+			if (getNodeAtIndex(i, j)->isObstacle)
 			{
 				return true;
 			}

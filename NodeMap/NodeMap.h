@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <HamsterAPIClientCPP/Hamster.h>
-#include "Node.h"
+#include "../Node/Node.h"
 #include "../Helpers/Constants.h"
 #include "../Helpers/PositionUtils.h"
 #include "../Helpers/Structures.h"

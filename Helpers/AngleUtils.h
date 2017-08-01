@@ -10,4 +10,4 @@ double convertRadiansToDegrees(double angleRadians);
 void rotateMapOnOrigin(cv::Mat* source, cv::Mat* dest, double rotationAngle);
 double getYawInOneCiricle(double yaw);
 
-#endif  ANGLEUTILS_H_
+#endif
