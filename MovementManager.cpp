@@ -14,7 +14,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 	this->waypoint = waypoint;
 	
 	// Calculate the robot location 
-	robot->realLocation = robot->prevBeliefedLocation = robot->currBeliefedLocation = robot->GetRealHamsterLocation();
+	robot->realLocation = robot->prevBeliefedLocation = robot->currBeliefedLocation = robot->getRealHamsterLocation();
 
 	// According to the location of the robot calculate the distance from the waypoint
 	recalculateDistanceFromWaypoint();
@@ -26,7 +26,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 		robot->prevBeliefedLocation = robot->currBeliefedLocation;
 		
 		// recalculate the current location 
-		robot->realLocation = robot->currBeliefedLocation = robot->GetRealHamsterLocation();
+		robot->realLocation = robot->currBeliefedLocation = robot->getRealHamsterLocation();
 		
 		// Recalculate the delta between last angle and current angle
 		recalculateDeltaYaw();
@@ -56,7 +56,7 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 		//mapDrawer->DrawRobot(robot->GetRealHamsterLocation());
 		
 		// Draw the location of the robot on the map
-		mapDrawer->Show(robot->GetRealHamsterLocation());
+		mapDrawer->Show(robot->getRealHamsterLocation());
 		sleep(1.5);
 	}
 

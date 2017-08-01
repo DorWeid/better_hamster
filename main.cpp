@@ -6,7 +6,7 @@
 #include "Gui/MapDrawer.h"
 #include "Localization/LocalizationManager.h"
 #include "Structs.h"
-#include "Robot.h"
+#include "Robot/Robot.h"
 #include "MovementManager.h"
 #include "Utils/PositionUtils.h"
 #include "math.h"
@@ -119,7 +119,7 @@ if(hamster->isConnected()) {
 		Node* currWaypoint = *iter;
 
 		Node hamsterWaypoint = ConvertToHamsterLocation(currWaypoint);
-		robot.realLocation = robot.currBeliefedLocation = robot.GetRealHamsterLocation();
+		robot.realLocation = robot.currBeliefedLocation = robot.getRealHamsterLocation();
 
 		if (isWaypointReached(robot.currBeliefedLocation, hamsterWaypoint))
 		{

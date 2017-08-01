@@ -8,7 +8,7 @@
 #include "../Localization/LocalizationParticle.h"
 #include "../Utils/PositionUtils.h"
 #include "../Utils/AngleUtils.h"
-#include "../Robot.h"
+#include "../Robot/Robot.h"
 #include "opencv2/imgproc.hpp"
 using namespace HamsterAPI;
 using namespace std;
