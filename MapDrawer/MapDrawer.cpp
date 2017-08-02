@@ -146,22 +146,19 @@ void MapDrawer::drawParticles(std::list<Particle*> particles)
 	double bestParticalesAvrageBelief = 0;
 	double particalesCounter = 0 ;
 
-	for (int i = 0; i != particles; i++)
+	for (std::list<Particle*>::iterator listIterator = particles.begin(); listIterator != particles.end(); listIterator++)
 	{
-		Particle* particale = (*particles)[i];
-		if(i >= particles->size() - 30)
+		if ((*listIterator)->bel > 0.03)
 		{
-			MapDrawer::setPointType(particale->row ,particale->col, GoodParticle);
-			bestParticalesAvrageBelief += particale->belief;
+			MapDrawer::SetPointType((*listIterator)->x ,(*listIterator)->y, GoodParticle);
+			bestParticalesAvrageBelief += (*listIterator)->bel;
 			particalesCounter++;
 		}
 		else
 		{
-			MapDrawer::SetPointType(particale->row ,particale->col, BadParticle);
+			MapDrawer::SetPointType((*listIterator)->x ,(*listIterator)->y, BadParticle);
 		}
 	}
-
-	return bestParticalesAvrageBelief / particalesCounter;
 }
 
 // Set the color of a point according to his point type
