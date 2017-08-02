@@ -54,8 +54,7 @@ void Robot::updateParticle()
 	std::vector<double> distances;
 	getScansBetween(0,360,distances);
 	
-	this->localizationManager->updateParticles(0,0,0,distances, scan.getScanAngleIncrement() * DEG2RAD, scan.getMaxRange());
-		
+	this->localizationManager->updateParticles(this->prevBeliefedLocation.x - this->currBeliefedLocation.x,this->prevBeliefedLocation.y - this->currBeliefedLocation.y,this->prevBeliefedLocation.yaw - this->currBeliefedLocation.yaw,distances, scan.getScanAngleIncrement() * DEG2RAD, scan.getMaxRange());		
 }
 
 void Robot::getScansBetween(double min, double max, std::vector<double> & distances) 
@@ -68,7 +67,6 @@ void Robot::getScansBetween(double min, double max, std::vector<double> & distan
 			distances.push_back(scan.getDistance(i));
 	}
 }
-
 
 HamsterAPI::Hamster * Robot::getHamster()
 {
