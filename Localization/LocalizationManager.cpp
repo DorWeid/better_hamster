@@ -1,7 +1,10 @@
 #include "LocalizationManager.h"
 
-LocalizationManager::LocalizationManager()
+LocalizationManager::LocalizationManager(struct positionState startPos )
 {
+	Particle par = new Particle(startPos.pos.x,startPos.pos.y,startPos.yaw,1,NULL);
+	
+	this->listOfParticle.push_back(par);
 }
 
 void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, double scanAngle, float maxRangeScan)
