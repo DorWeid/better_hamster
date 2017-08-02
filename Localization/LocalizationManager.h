@@ -11,7 +11,7 @@ class LocalizationManager
 	public:
 	  std::list<Particle*> listOfParticle;
 	  LocalizationManager();
-	  void updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, LidarScan lidarScan);
+	  void updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, double scanAngle, float maxRangeScan);
   
 };
 
