@@ -54,6 +54,8 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 		// Recalculate distance from the wayPoint
 		recalculateDistanceFromTarget();
 		//mapDrawer->DrawRobot(robot->GetRealHamsterLocation());
+		
+		robot->updateParticle();
 		mapDrawer->drawParticles(robot->localizationManager->listOfParticle);
 		// Draw the location of the robot on the map
 		mapDrawer->Show(robot->getRealHamsterLocation());
