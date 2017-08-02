@@ -118,7 +118,7 @@ void startRobot()
 	std::list<Node* > waypoints = pathPlanner->getWaypoints(startPos, goalPos);
 
 	// Draw the map
-//	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
+	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
 
 	// Draw the blown map
 	mapDrawer->DrawNodeMap(&roomBlownMap);
@@ -139,14 +139,14 @@ void startRobot()
 
 	
 // TO DO: CHANGE LOCALIZATION MANAGER TO USE PARTICLE
- LocalizationManager* localizationManager = new LocalizationManager(drawedMap, rRobot->getHamster(), mapResolution);
+ //LocalizationManager* localizationManager = new LocalizationManager(drawedMap, rRobot->getHamster(), mapResolution);
 
- rRobot->localizationManager = localizationManager;
+ //rRobot->localizationManager = localizationManager;
  rRobot->mapHeight = roomRealMapFromMemory.getHeight();
  rRobot->mapWidth = roomRealMapFromMemory.getWidth();
  rRobot->resolution = mapResolution;
 
- localizationManager->InitParticalesOnMap(&startPositionState); 
+ //localizationManager->InitParticalesOnMap(&startPositionState);
 
  //initializeParticalesOnRobot(roomRealMapFromMemory, roomBlownMap, localizationManager, mapDrawer, goalPos);
 
