@@ -8,6 +8,7 @@ Particle::Particle(int posX, int posY, int yaw, double bel, HamsterAPI::Occupanc
 {
 	this->x = posX;
 	this->y = posY;
+	Particle::updateMapLocationToIndex();
 	this->yaw = yaw;
 	this->bel = bel;
 	this->mapGrid = map;
