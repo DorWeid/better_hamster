@@ -111,7 +111,7 @@ double Particle::probByMes(vector<double> laserTrace, LidarScan lidarScan)
   	
 	if(hits + misses != 0)
 	{
-		return hitRate = (double) hits / (hits + misses);
+		return (double) hits / (hits + misses);
 	}
 	else 
 	{
