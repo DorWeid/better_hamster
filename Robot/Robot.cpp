@@ -54,7 +54,7 @@ void Robot::updateParticle()
 	std::vector<double> distances;
 	getScansBetween(0,360,distances);
 	
-	this->localizationManager->updateParticles(this->currBeliefedLocation.x - this->prevBeliefedLocation.x, this->currBeliefedLocation.y - this->prevBeliefedLocation.y,this->currBeliefedLocation.yaw - this->prevBeliefedLocation.yaw,distances, scan.getScanAngleIncrement() * DEG2RAD, scan.getMaxRange());		
+	this->localizationManager->updateParticles(this->currBeliefedLocation.pos.x - this->prevBeliefedLocation.pos.x, this->currBeliefedLocation.pos.y - this->prevBeliefedLocation.pos.y,this->currBeliefedLocation.yaw - this->prevBeliefedLocation.yaw,distances, scan.getScanAngleIncrement() * DEG2RAD, scan.getMaxRange());
 }
 
 void Robot::getScansBetween(double min, double max, std::vector<double> & distances) 
