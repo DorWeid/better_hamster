@@ -139,16 +139,16 @@ void startRobot()
 
 	
 // TO DO: CHANGE LOCALIZATION MANAGER TO USE PARTICLE
-/* LocalizationManager* localizationManager = new LocalizationManager(drawedMap, rRobot->getHamster(), mapResolution);
+ LocalizationManager* localizationManager = new LocalizationManager(drawedMap, rRobot->getHamster(), mapResolution);
 
  rRobot->localizationManager = localizationManager;
  rRobot->mapHeight = roomRealMapFromMemory.getHeight();
  rRobot->mapWidth = roomRealMapFromMemory.getWidth();
  rRobot->resolution = mapResolution;
 
- localizationManager->InitParticalesOnMap(&startPositionState);
+ localizationManager->InitParticalesOnMap(&startPositionState); 
 
- //initializeParticalesOnRobot(roomRealMapFromMemory, roomBlownMap, localizationManager, mapDrawer, goalPos);*/
+ //initializeParticalesOnRobot(roomRealMapFromMemory, roomBlownMap, localizationManager, mapDrawer, goalPos);
 
  //mapDrawer->DrawRobot(robot.GetRealHamsterLocation());
 
