@@ -12,7 +12,7 @@ Robot::Robot()
 	this->mapHeight = -1;
 	this->mapWidth = -1;
 	this->resolution = -1;
-	this->localizationManager = NULL;
+	//this->localizationManager = NULL;
 }
 
 // Get the hamster's current location by returning a structure of {positionState} type

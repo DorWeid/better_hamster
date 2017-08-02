@@ -13,7 +13,7 @@
 #include "../Helpers/Angle.h"
 #include "../Helpers/Constants.h"
 #include "../Helpers/Structures.h"
-#include "../Localization/LocalizationManager.h"
+
 #include "../MapDrawer/MapDrawer.h"
 
 using namespace HamsterAPI;
@@ -39,7 +39,7 @@ class Robot
 		HamsterAPI::Hamster * getHamster();
 
 		// Localization manager instance
-		LocalizationManager * localizationManager;
+		//LocalizationManager * localizationManager;
 
 		double mapHeight;
 		double mapWidth;

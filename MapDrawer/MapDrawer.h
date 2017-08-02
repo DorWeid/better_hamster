@@ -8,7 +8,6 @@
 #include <HamsterAPIClientCPP/Hamster.h>
 #include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
-#include "../Localization/LocalizationParticle.h"
 #include "../Helpers/Position.h"
 #include "../Robot/Robot.h"
 #include "opencv2/imgproc.hpp"
@@ -42,7 +41,7 @@ public:
 	void DrawPath(Node* goal);
 	void DrawRobot(positionState pos, cv::Mat * map);
 	void Show(positionState robotPos);
-	double DrawPatricles(std::vector<LocalizationParticle *>* particles);
+	//double DrawPatricles(std::vector<LocalizationParticle *>* particles);
 	cv::Mat* getMap();
 	//void DrawLidarScan(std::vector<positionState> obstacles);
 private:
