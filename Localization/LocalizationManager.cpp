@@ -31,7 +31,13 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
         else if((*iterator)->getBel() > 0.03)
         {
            // need to add the particle generated
-           listOfNewParticle.push_back((*iterator)->generateParticle());
+           std::list<Particle*> listOfGenerateParticle = (*iterator)->generateParticle();
+            
+            for (std::list<Particle*>::iterator listIterator = this->listOfGenerateParticle.begin(); listIterator != this->listOfGenerateParticle.end(); listIterator++)
+            {
+                listOfNewParticle.push_back(listIterator);
+            } 
+            
             ++iterator;
         }
         else
@@ -40,7 +46,7 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
         }
     }
     
-    for (listIterator = this->listOfNewParticle.begin(); listIterator != this->listOfNewParticle.end(); listIterator++)
+    for (std::list<Particle*>::iterator listIterator = this->listOfNewParticle.begin(); listIterator != this->listOfNewParticle.end(); listIterator++)
     {
         this->listOfParticle.push_back(listIterator);
     } 
