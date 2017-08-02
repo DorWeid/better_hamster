@@ -4,7 +4,7 @@ LocalizationManager::LocalizationManager()
 {
 }
 
-void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, LidarScan lidarScan)
+void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, double scanAngle, float maxRangeScan)
 {
     // Normalization factor is here to keep the ratio between all the partcile, and to keep the belief be between 0 to 1
     double normalizationFactor = 0;
@@ -13,7 +13,7 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
     // Run on all the particle, and update them according to the deltas
     for (std::list<Particle*>::iterator listIterator = this->listOfParticle.begin(); listIterator != this->listOfParticle.end(); listIterator++)
     {
-        (*listIterator)->update(deltaX, deltaY, deltaYaw, sensorRead, lidarScan);
+        (*listIterator)->update(deltaX, deltaY, deltaYaw, sensorRead, scanAngle, maxRangeScan);
         double belCurParticle = (*listIterator)->getBel();
         
         normalizationFactor += belCurParticle;

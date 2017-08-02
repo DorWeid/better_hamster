@@ -24,7 +24,7 @@ class Particle {
 
 	  HamsterAPI::OccupancyGrid *mapGrid;
 
-	  void update(int deltaX, int deltaY, int deltaYaw, vector<double> laserTrace, LidarScan lidarScan);
+	  void update(int deltaX, int deltaY, int deltaYaw, vector<double> laserTrace, double scanAngle, float maxRangeScan);
 
 	  double getBel();
 	  void setBel(double newBel);
