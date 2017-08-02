@@ -29,7 +29,7 @@ class NodeMap
 		// Retrieve the node at the given coordinates
 		Node* getNodeByCoordinates(int x, int y) const;
 		void loadMap(cv::Mat* roomRealMapFromMemory);
-		void loadBlowMap(cv::Mat* roomRealMapFromMemory);
+		void loadBlownMap(cv::Mat* roomRealMapFromMemory);
 		NodeMap getBlownNodeMap();
 		void resizeMap(int pixelsPerCell, NodeMap* output) const;
 		bool isAreaAnObstacle(int colIndex, int rowIndex, int resolution) const;

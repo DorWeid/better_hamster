@@ -98,14 +98,18 @@ void startRobot()
 	roomRealMap.loadMap(drawedMap);
 
 	// Init a blown map according to the resolution of the map, and size of the robot  with the mat
-	roomBlownMap.loadBlowMap(drawedMap);
+	roomBlownMap.loadBlownMap(drawedMap);
 
 	// Init the robot start and goal positions, and get is goal and start position in the Blown map
 	Node *startPos = roomBlownMap.getNodeByCoordinates(ROBOT_START_X, ROBOT_START_Y);
 	Node *goalPos = roomBlownMap.getNodeByCoordinates(GOAL_X, GOAL_Y);
 
 	// Check if the goal is an obstacle
-	cout << "Is goal an obstacle: " << roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle << endl;
+	if (roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle)
+	{
+		cout << "Goal is obstacle, cannot proceed." << endl;
+		return;
+	}
 
 	// Send to the path planner the blown map, start positon and goal position and get from him the path
 	pathPlanner->calculatePath(&roomBlownMap,startPos,goalPos);

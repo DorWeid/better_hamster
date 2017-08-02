@@ -44,7 +44,7 @@ void NodeMap::loadMap(cv::Mat* map)
 }
 
 // Creates a new image from the source file where every obstacle is blown up
-void NodeMap::loadBlowMap(cv::Mat* map)
+void NodeMap::loadBlownMap(cv::Mat* map)
 {
 	loadMap(map);
 

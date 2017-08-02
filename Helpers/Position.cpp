@@ -1,5 +1,5 @@
-#ifndef UTILS_POSITIONUTILS_H_
-#define UTILS_POSITIONUTILS_H_
+#ifndef POSITION_H_
+#define POSITION_H_
 #include <math.h>
 #include "../Node/Node.h"
 #include "Constants.h"
@@ -14,4 +14,4 @@ Node ConvertToHamsterLocation(Node* waypoint)
 }
 
 
-#endif  UTILS_POSITIONUTILS_H_
+#endif
