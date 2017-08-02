@@ -95,18 +95,13 @@ double Particle::probByMes(vector<double> laserTrace, LidarScan lidarScan)
 			int j = obsX / ogridResolution + ogridWidth / 2;
 
 			// Determine if there was a hit according to the grid
-			if (this->mapGrid->getCell(k, j) == CELL_FREE)
+			if (this->mapGrid->getCell(k, j) != CELL_OCCUPIED)
 			{
 				misses++;
-			}
-			else if(this->mapGrid->getCell(k, j) == CELL_OCCUPIED)
-			{
-				hits++;
-			}
-			else
-			{
-				// not sure about the syntax...
 				this->mapGrid->setCell(k,j, CELL_OCCUPIED);
+			}
+			else 
+			{
 				hits++;
 			}
 		}
@@ -114,9 +109,14 @@ double Particle::probByMes(vector<double> laserTrace, LidarScan lidarScan)
 		i++;
   	}	
   	
-	double hitRate = (double) hits / (hits + misses);
-
-	return hitRate;
+	if(hits + misses != 0)
+	{
+		return hitRate = (double) hits / (hits + misses);
+	}
+	else 
+	{
+		return 1;
+	}
 }
 
 void Particle::updateParticlePosition(int deltaX, int deltaY, int deltaYaw)
