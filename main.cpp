@@ -98,7 +98,7 @@ void startRobot()
 	roomRealMap.loadMap(drawedMap);
 
 	// Init a blown map according to the resolution of the map, and size of the robot  with the mat
-	roomBlownMap.loadBlowMap(drawedMap);
+	roomBlownMap.loadBlownMap(drawedMap);
 
 	// Init the robot start and goal positions, and get is goal and start position in the Blown map
 	Node *startPos = roomBlownMap.getNodeByCoordinates(ROBOT_START_X, ROBOT_START_Y);
