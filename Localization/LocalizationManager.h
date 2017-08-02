@@ -12,7 +12,7 @@ class LocalizationManager
 {
 	public:
 	  std::list<Particle*> listOfParticle;
-	  LocalizationManager(struct positionState startPositionState);
+	  LocalizationManager(struct positionState startPositionState, HamsterAPI::OccupancyGrid *map);
 	  void updateParticles(int deltaX, int deltaY, int deltaYaw, vector<double> sensorRead, double scanAngle, float maxRangeScan);
   
 };
