@@ -148,10 +148,10 @@ void MapDrawer::drawParticles(std::list<Particle*> particles)
 
 	for (int i = 0; i != particles; i++)
 	{
-		LocalizationParticle* particale = (*particles)[i];
+		Particle* particale = (*particles)[i];
 		if(i >= particles->size() - 30)
 		{
-			MapDrawer::SetPointType(particale->row ,particale->col, GoodParticle);
+			MapDrawer::setPointType(particale->row ,particale->col, GoodParticle);
 			bestParticalesAvrageBelief += particale->belief;
 			particalesCounter++;
 		}

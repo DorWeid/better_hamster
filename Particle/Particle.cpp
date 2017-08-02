@@ -26,7 +26,7 @@ void Particle::update(int deltaX, int deltaY, int deltaYaw, vector<double> laser
   double preBel = this->bel * (this->probByMove(deltaX,deltaY,deltaYaw));
   
   // prebel * probByMes * N (normal that need to be find ! TODO)
-  this->bel = preBel*probByMes(laserTrace, lidarScan);
+  this->bel = preBel * probByMes(laserTrace, lidarScan);
 }
 
 // Get the belief of the particle

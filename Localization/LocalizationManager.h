@@ -1,6 +1,6 @@
 #ifndef LOCALIZATION_MANAGER_H
 #define LOCALIZATION_MANAGER_H
-#include "Particle.h"
+#include "../Particle/Particle.h"
 #include <HamsterAPIClientCPP/Hamster.h>
 #include <list>
 using namespace std;
