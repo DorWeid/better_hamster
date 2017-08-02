@@ -48,6 +48,28 @@ void Robot::setHamsterSpeed(double speed, double wheelsAngle)
 	this->leHamster->sendSpeed(speed, wheelsAngle);
 }
 
+void Robot::updateParticle()
+{
+	HamsterAPI::LidarScan scan = hamster->getLidarScan();
+	std::vector<double> distances;
+	getScansBetween(0,360,distances);
+	
+	this->localizationManager->updateParticles(0,0,0,distances, scan.getScanAngleIncrement() * DEG2RAD, scan.getMaxRange());
+		
+}
+
+void Robot::getScansBetween(double min, double max, std::vector<double> & distances) 
+{
+	HamsterAPI::LidarScan scan = hamster->getLidarScan();
+
+	for (size_t i = 0; i < scan.getScanSize(); i++) {
+		double degree = scan.getScanAngleIncrement() * i;
+		if (degree >= min && degree <= max)
+			distances.push_back(scan.getDistance(i));
+	}
+}
+
+
 HamsterAPI::Hamster * Robot::getHamster()
 {
 	return leHamster;
