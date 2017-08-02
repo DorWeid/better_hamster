@@ -177,8 +177,6 @@ Node* PathPlanner::getMinimalFNode(set<Node*>* openList)
 	return minNode;
 }
 
-
-
 // returns the slope between two nodes
 double PathPlanner::getSlope(Node *a, Node * b)
 {

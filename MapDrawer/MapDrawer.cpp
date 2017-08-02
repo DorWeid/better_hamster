@@ -54,18 +54,18 @@ void MapDrawer::DrawMap(OccupancyGrid* occupancyGridMap, double rotationAngle)
 	     for (int y = 0; y < width; y++)
 	     {
 		     // Set the point type according to the cell of the grid
-				  if (occupancyGridMap->getCell(x, y) == CELL_FREE)
-				  {
-					  MapDrawer::SetPointType(x,y, Free);
-				  }
-				  else if (occupancyGridMap->getCell(x, y) == CELL_OCCUPIED)
-				  {
-					  MapDrawer::SetPointType(x,y, Obstacle);
-				  }
-				  else
-				  {
-					  MapDrawer::SetPointType(x,y, Unknown);
-				  }
+			  if (occupancyGridMap->getCell(x, y) == CELL_FREE)
+			  {
+				  MapDrawer::SetPointType(x,y, Free);
+			  }
+			  else if (occupancyGridMap->getCell(x, y) == CELL_OCCUPIED)
+			  {
+				  MapDrawer::SetPointType(x,y, Obstacle);
+			  }
+			  else
+			  {
+				  MapDrawer::SetPointType(x,y, Unknown);
+			  }
 
 	     }
 	}

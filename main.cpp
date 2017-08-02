@@ -114,7 +114,7 @@ void startRobot()
 	std::list<Node* > waypoints = pathPlanner->getWaypoints(startPos, goalPos);
 
 	// Draw the map
-	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
+//	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
 
 	// Draw the blown map
 	mapDrawer->DrawNodeMap(&roomBlownMap);
@@ -153,6 +153,7 @@ void startRobot()
 	// If the robot is conected
 	if(rRobot->getHamster()->isConnected())
 	{
+		int w = 1;
 		// Run on all the waypoint list
 		for (std::list<Node*>::reverse_iterator iter = waypoints.rbegin(); iter != waypoints.rend(); ++iter)
 		{
@@ -163,7 +164,8 @@ void startRobot()
 
 			if (isWaypointReached(rRobot->currBeliefedLocation, hamsterWaypoint))
 			{
-				cout << endl << "Reached waypoint (" << hamsterWaypoint.x << ", " << hamsterWaypoint.y << ")" << endl << endl;
+				cout << endl << "Reached waypoint #" << w << ": (" << hamsterWaypoint.x << ", " << hamsterWaypoint.y << ")" << endl << endl;
+				w++;
 			}
 			else
 			{
@@ -171,7 +173,7 @@ void startRobot()
 			}
 		}
 	
-		 cout << "The Robot reached the waypoint: (" << GOAL_X << ", " << GOAL_Y << ") and our grade is 100" << endl;
+		 cout << "Reached goal after " << w << " waypoints: (" << GOAL_X << ", " << GOAL_Y << ")" << endl;
 	}
 }
 

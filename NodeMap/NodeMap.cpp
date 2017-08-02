@@ -41,7 +41,6 @@ void NodeMap::loadMap(cv::Mat* map)
 		}
 	}
 	_matrix = matrix;
-
 }
 
 // Creates a new image from the source file where every obstacle is blown up
