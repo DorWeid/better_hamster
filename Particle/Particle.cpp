@@ -8,13 +8,13 @@ Particle::Particle(int posX, int posY, int yaw, double bel, HamsterAPI::Occupanc
 {
 	this->x = posX;
 	this->y = posY;
-	updateMapLocationToIndex();
 	this->yaw = yaw;
 	this->bel = bel;
 	this->mapGrid = map;
 	this->ogridResolution = this->mapGrid->getResolution();
 	this->ogridHeight = this->mapGrid->getWidth();
 	this->ogridWidth = this->mapGrid->getHeight();
+	updateMapLocationToIndex();
 
 }
 
