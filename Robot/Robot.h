@@ -34,7 +34,7 @@ class Robot
 		positionState getRealHamsterLocation();
 		void updateHamsterRealLocation();
 		void setHamsterSpeed(double speed, double wheelsAngle);
-
+		void updateParticle();
 		// Returns the hamster's instance
 		HamsterAPI::Hamster * getHamster();
 
@@ -48,6 +48,7 @@ class Robot
 	private:
 		// The robot instance. Should be initialized once!
 		Hamster * leHamster;
+		void getScansBetween(double min, double max, std::vector<double> & distances);
 };
 
 #endif /* ROBOT_H_ */
