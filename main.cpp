@@ -118,7 +118,7 @@ void startRobot()
 	std::list<Node* > waypoints = pathPlanner->getWaypoints(startPos, goalPos);
 
 	// Draw the map
-//	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
+	mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
 
 	// Draw the blown map
 	mapDrawer->DrawNodeMap(&roomBlownMap);
