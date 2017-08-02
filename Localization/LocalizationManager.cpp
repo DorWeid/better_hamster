@@ -2,7 +2,7 @@
 
 LocalizationManager::LocalizationManager(struct positionState startPos )
 {
-	Particle par = new Particle(startPos.pos.x,startPos.pos.y,startPos.yaw,1,NULL);
+	Particle * par = new Particle(startPos.pos.x,startPos.pos.y,startPos.yaw,1,NULL);
 	
 	this->listOfParticle.push_back(par);
 }
