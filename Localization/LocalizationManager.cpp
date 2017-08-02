@@ -1,8 +1,8 @@
 #include "LocalizationManager.h"
 
-LocalizationManager::LocalizationManager(struct positionState startPos )
+LocalizationManager::LocalizationManager(struct positionState startPos, HamsterAPI::OccupancyGrid *map)
 {
-	Particle * par = new Particle(startPos.pos.x,startPos.pos.y,startPos.yaw,1,NULL);
+	Particle * par = new Particle(startPos.pos.x,startPos.pos.y,startPos.yaw,1,*map);
 	
 	this->listOfParticle.push_back(par);
 }
