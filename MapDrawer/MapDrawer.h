@@ -2,8 +2,8 @@
  * This class responsible to draw the map on the UI 
  */
 
-#ifndef GUI_MAPDRAWER_H_
-#define GUI_MAPDRAWER_H_
+#ifndef MAPDRAWER_MAPDRAWER_H_
+#define MAPDRAWER_MAPDRAWER_H_
 
 #include <HamsterAPIClientCPP/Hamster.h>
 #include "../Node/Node.h"
@@ -52,4 +52,4 @@ private:
 
 };
 
-#endif /* GUI_MAPDRAWER_H_ */
+#endif /* MAPDRAWER_MAPDRAWER_H_ */

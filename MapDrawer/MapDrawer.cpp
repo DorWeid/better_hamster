@@ -1,4 +1,4 @@
-#include "MapDrawer.h"
+#include "../MapDrawer/MapDrawer.h"
 
 MapDrawer::MapDrawer(int width, int height) : WINDOW_TITLE("Room-Map")
 {

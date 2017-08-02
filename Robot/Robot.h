@@ -10,11 +10,11 @@
 #include <math.h>
 #include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
-#include "../Gui/MapDrawer.h"
 #include "../Helpers/Angle.h"
 #include "../Helpers/Constants.h"
 #include "../Helpers/Structures.h"
 #include "../Localization/LocalizationManager.h"
+#include "../MapDrawer/MapDrawer.h"
 
 using namespace HamsterAPI;
 using namespace std;

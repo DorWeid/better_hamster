@@ -3,7 +3,7 @@
 #include "NodeMap/NodeMap.h"
 #include "PathPlanner/PathPlanner.h"
 #include <stdlib.h>
-#include "Gui/MapDrawer.h"
+#include "MapDrawer/MapDrawer.h"
 #include "Localization/LocalizationManager.h"
 #include "Robot/Robot.h"
 #include "MovementManager/MovementManager.h"
@@ -34,6 +34,46 @@ int main() {
 
 	return 0;
 }
+
+// Check if the given waypoint was reached
+bool isWaypointReached(const positionState& locationRobot,
+		const Node& locationWaypoint) {
+
+	// Check distance between current location to the waypoint location
+	double distanceFromWaypoint = sqrt(
+			pow(locationRobot.pos.x - locationWaypoint.x, 2)
+					+ pow(locationRobot.pos.y - locationWaypoint.y, 2));
+
+	// Return if the distance is smaller than the tolerance distance
+	return distanceFromWaypoint <= DISTANCE_FROM_WAYPOINT_TOLERANCE;
+}
+
+// TO DO: CHANGE THIS FUNCTION OF PARTICLE
+// Initialize the particle of the robot
+void initializeParticalesOnRobot(OccupancyGrid roomRealMapFromMemory,
+		NodeMap roomBlownMap, LocalizationManager* localizationManager,
+		MapDrawer* mapDrawer, Node* goalPos) {
+	cout << "Initialize particales on robot" << endl;
+
+	double bestParticalesAvrageBelief = 0;
+
+	// While average belief is smaller than the start to belief const
+	while (bestParticalesAvrageBelief < TARGET_START_BELIEF) {
+		localizationManager->moveParticales(0, 0, 0);
+		mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
+		mapDrawer->DrawNodeMap(&roomBlownMap);
+		mapDrawer->DrawPath(goalPos);
+		bestParticalesAvrageBelief = mapDrawer->DrawPatricles(
+				localizationManager->getParticles());
+		positionState a;
+		mapDrawer->Show(a);
+		cout << "Target belief is: " << TARGET_START_BELIEF
+				<< " current average belief: " << bestParticalesAvrageBelief
+				<< endl;
+	}
+}
+
+
 // Main function of the robot
 void startRobot() {
 
@@ -136,43 +176,6 @@ if(rRobot->getHamster()->isConnected()) {
  	 cout << "The Robot reached the waypoint: (" << GOAL_X << ", " << GOAL_Y << ") and our grade is 100" << endl;
 }
 	
-// Check if the given waypoint was reached 
-bool isWaypointReached(const positionState& locationRobot,
-		const Node& locationWaypoint) {
-	
-	// Check distance between current location to the waypoint location
-	double distanceFromWaypoint = sqrt(
-			pow(locationRobot.pos.x - locationWaypoint.x, 2)
-					+ pow(locationRobot.pos.y - locationWaypoint.y, 2));
-
-	// Return if the distance is smaller than the tolerance distance
-	return distanceFromWaypoint <= DISTANCE_FROM_WAYPOINT_TOLERANCE;
-}
-
-// TO DO: CHANGE THIS FUNCTION OF PARTICLE
-// Initialize the particle of the robot
-void initializeParticalesOnRobot(OccupancyGrid roomRealMapFromMemory,
-		NodeMap roomBlownMap, LocalizationManager* localizationManager,
-		MapDrawer* mapDrawer, Node* goalPos) {
-	cout << "Initialize particales on robot" << endl;
-	
-	double bestParticalesAvrageBelief = 0;
-	
-	// While average belief is smaller than the start to belief const
-	while (bestParticalesAvrageBelief < TARGET_START_BELIEF) {
-		localizationManager->moveParticales(0, 0, 0);
-		mapDrawer->DrawMap(&roomRealMapFromMemory, MAP_ROTATION);
-		mapDrawer->DrawNodeMap(&roomBlownMap);
-		mapDrawer->DrawPath(goalPos);
-		bestParticalesAvrageBelief = mapDrawer->DrawPatricles(
-				localizationManager->getParticles());
-		positionState a;
-		mapDrawer->Show(a);
-		cout << "Target belief is: " << TARGET_START_BELIEF
-				<< " current average belief: " << bestParticalesAvrageBelief
-				<< endl;
-	}
-}
 
 }
 
