@@ -40,5 +40,8 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
         }
     }
     
-   // this->listOfParticle.push_back(listOfNewParticle);
+    for (listIterator = this->listOfNewParticle.begin(); listIterator != this->listOfNewParticle.end(); listIterator++)
+    {
+        this->listOfParticle.push_back(listIterator);
+    } 
 }
