@@ -77,7 +77,7 @@ double Particle::probByMove(int deltaX, int deltaY, int deltaYaw)
 }
 
 // Get a probability according to the sensor
-double Particle::probByMes(vector<double> laserTrace, LidarScan lidarScan)
+double Particle::probByMes(vector<double> laserTrace, double scanAngle, float maxRangeScan)
 {	
 	int hits = 0;
 	int misses = 0;
@@ -85,9 +85,9 @@ double Particle::probByMes(vector<double> laserTrace, LidarScan lidarScan)
 	
 	for(std::vector<double>::reverse_iterator iterator = laserTrace.rbegin(); iterator != laserTrace.rend(); ++iterator) {
 		
-		double angle = lidarScan.getScanAngleIncrement() * i * DEG2RAD;
+		double angle = scanAngle * i; // lidarScan.getScanAngleIncrement() * i * DEG2RAD;
 
-		if (lidarScan.getDistance(i) < lidarScan.getMaxRange() - 0.001){
+		if (*iterator < maxRangeScan - 0.001){
 			double obsX = this->x + *iterator * cos(angle + this->yaw * DEG2RAD- 180 * DEG2RAD);
 			double obsY = this->y + *iterator * sin(angle + this->yaw * DEG2RAD- 180 * DEG2RAD);
 			
