@@ -112,9 +112,9 @@ void startRobot()
 
 	
 // TO DO: CHANGE LOCALIZATION MANAGER TO USE PARTICLE
- //LocalizationManager* localizationManager = new LocalizationManager(drawedMap, rRobot->getHamster(), mapResolution);
+ LocalizationManager* localizationManager = new LocalizationManager(startPositionState);
 
- //rRobot->localizationManager = localizationManager;
+ rRobot->localizationManager = localizationManager;
  rRobot->mapHeight = roomRealMapFromMemory.getHeight();
  rRobot->mapWidth = roomRealMapFromMemory.getWidth();
  rRobot->resolution = mapResolution;
