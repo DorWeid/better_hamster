@@ -105,7 +105,11 @@ void startRobot()
 	Node *goalPos = roomBlownMap.getNodeByCoordinates(GOAL_X, GOAL_Y);
 
 	// Check if the goal is an obstacle
-	cout << "Is goal an obstacle: " << roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle << endl;
+	if (roomBlownMap.getNodeByCoordinates(goalPos->x, goalPos->y)->isObstacle)
+	{
+		cout << "Goal is obstacle, cannot proceed." << endl;
+		return;
+	}
 
 	// Send to the path planner the blown map, start positon and goal position and get from him the path
 	pathPlanner->calculatePath(&roomBlownMap,startPos,goalPos);
