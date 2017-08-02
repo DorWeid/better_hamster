@@ -32,10 +32,10 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
         {
            // need to add the particle generated
            std::list<Particle*> listOfGenerateParticle = (*iterator)->generateParticle();
-            
+
             for (std::list<Particle*>::iterator listIterator = this->listOfGenerateParticle.begin(); listIterator != this->listOfGenerateParticle.end(); listIterator++)
             {
-                listOfNewParticle.push_back(listIterator);
+                listOfNewParticle.push_back(*listIterator);
             } 
             
             ++iterator;
@@ -48,6 +48,6 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
     
     for (std::list<Particle*>::iterator listIterator = this->listOfNewParticle.begin(); listIterator != this->listOfNewParticle.end(); listIterator++)
     {
-        this->listOfParticle.push_back(listIterator);
+        this->listOfParticle.push_back(*listIterator);
     } 
 }
