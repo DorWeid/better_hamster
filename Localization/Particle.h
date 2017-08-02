@@ -39,7 +39,7 @@ private:
   double probByMove(int deltaX, int deltaY, int deltaYaw);
   
   // TODO:: laser trace must be a different thing than a int
-  double probByMes(vector<double> laserTrace, LidarScan lidarScan);
+  double probByMes(vector<double> laserTrace, double scanAngle, float maxRangeScan);
   
   void updateParticlePosition(int deltaX, int deltaY, int deltaYaw);
 };
