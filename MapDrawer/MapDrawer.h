@@ -9,12 +9,14 @@
 #include "../Node/Node.h"
 #include "../NodeMap/NodeMap.h"
 #include "../Helpers/Position.h"
-#include "../Robot/Robot.h"
-#include "opencv2/imgproc.hpp"
-
 #include "../Helpers/Angle.h"
-using namespace HamsterAPI;
+#include "../Robot/Robot.h"
+#include "../Localization/Particle.h"
+#include "opencv2/imgproc.hpp"
+#include <list>
+
 using namespace std;
+using namespace HamsterAPI;
 
 enum MapPointType {
 	Unknown,
@@ -41,7 +43,7 @@ public:
 	void DrawPath(Node* goal);
 	void DrawRobot(positionState pos, cv::Mat * map);
 	void Show(positionState robotPos);
-	//double DrawPatricles(std::vector<LocalizationParticle *>* particles);
+	void drawParticles(std::list <Particle*> particles);
 	cv::Mat* getMap();
 	//void DrawLidarScan(std::vector<positionState> obstacles);
 private:

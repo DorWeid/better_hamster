@@ -32,7 +32,6 @@ cv::Mat* MapDrawer::getMap()
 	return _map;
 }
 
-
 // Draw the grid with a rotation angle
 void MapDrawer::DrawMap(OccupancyGrid* occupancyGridMap, double rotationAngle)
 {
@@ -141,29 +140,29 @@ void MapDrawer::DrawPath(Node* goal)
 	//MapDrawer::SetPointType(goal->y ,goal->x , PathStart);
 }
 
-// Draw the particle on the map
-//double MapDrawer::DrawPatricles(std::vector<LocalizationParticle *>* particles)
-//{
-//	double bestParticalesAvrageBelief = 0;
-//	double particalesCounter = 0 ;
-//
-//	for (unsigned i = 0; i != particles->size(); i++)
-//	{
-//		LocalizationParticle* particale = (*particles)[i];
-//		if(i >= particles->size() - 30)
-//		{
-//			MapDrawer::SetPointType(particale->row ,particale->col, GoodParticle);
-//			bestParticalesAvrageBelief += particale->belief;
-//			particalesCounter++;
-//		}
-//		else
-//		{
-//			MapDrawer::SetPointType(particale->row ,particale->col, BadParticle);
-//		}
-//	}
-//
-//	return bestParticalesAvrageBelief / particalesCounter;
-//}
+// Draw given particles on map
+void MapDrawer::drawParticles(std::list<Particle*> particles)
+{
+	double bestParticalesAvrageBelief = 0;
+	double particalesCounter = 0 ;
+
+	for (int i = 0; i != particles; i++)
+	{
+		LocalizationParticle* particale = (*particles)[i];
+		if(i >= particles->size() - 30)
+		{
+			MapDrawer::SetPointType(particale->row ,particale->col, GoodParticle);
+			bestParticalesAvrageBelief += particale->belief;
+			particalesCounter++;
+		}
+		else
+		{
+			MapDrawer::SetPointType(particale->row ,particale->col, BadParticle);
+		}
+	}
+
+	return bestParticalesAvrageBelief / particalesCounter;
+}
 
 // Set the color of a point according to his point type
 void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
