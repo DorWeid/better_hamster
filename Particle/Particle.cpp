@@ -120,8 +120,8 @@ double Particle::probByMes(vector<double> laserTrace, double scanAngle, float ma
 
 void Particle::updateParticlePosition(int deltaX, int deltaY, int deltaYaw)
 {
-	this->x += deltaX;
-	this->y += deltaY;
+	this->x += deltaY;
+	this->y += deltaX;
 
 	this->yaw += deltaYaw;
 	this->yaw = (this->yaw >= 360) ? this->yaw - 360 : this->yaw;
