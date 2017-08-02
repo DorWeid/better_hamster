@@ -13,7 +13,7 @@ void LocalizationManager::updateParticles(int deltaX, int deltaY, int deltaYaw, 
     // Run on all the particle, and update them according to the deltas
     for (std::list<Particle*>::iterator listIterator = this->listOfParticle.begin(); listIterator != this->listOfParticle.end(); listIterator++)
     {
-        (*listIterator)->update(deltaX, deltaY, deltaYaw, sensorRead, lidarScan);
+        (*listIterator)->update(deltaX, deltaY, deltaYaw, lidarScan.getScanAngleIncrement(), lidarScan.getMaxRange());
         double belCurParticle = (*listIterator)->getBel();
         
         normalizationFactor += belCurParticle;
