@@ -19,14 +19,13 @@ Particle::Particle(int posX, int posY, int yaw, double bel, HamsterAPI::Occupanc
 }
 
 // Update the Bel of the current particle according to his new Place, and the sensor 
-void Particle::update(int deltaX, int deltaY, int deltaYaw, vector<double> laserTrace, LidarScan lidarScan)
+void Particle::update(int deltaX, int deltaY, int deltaYaw, vector<double> laserTrace, double scanAngle, float maxRangeScan)
 {
   updateParticlePosition(deltaX, deltaY, deltaYaw);
   
   double preBel = this->bel * (this->probByMove(deltaX,deltaY,deltaYaw));
   
-  // prebel * probByMes * N (normal that need to be find ! TODO)
-  this->bel = preBel * probByMes(laserTrace, lidarScan);
+  this->bel = preBel * probByMes(laserTrace, scanAngle, maxRangeScan);
 }
 
 // Get the belief of the particle
