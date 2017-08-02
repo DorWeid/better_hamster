@@ -26,7 +26,7 @@ enum MapPointType {
 	PathStart,
 	PathEnd,
 	Waypoint,
-	Particle,
+	ParticleType,
 	LidarScanObstacle,
 	GoodParticle,
 	BadParticle
@@ -43,7 +43,7 @@ public:
 	void DrawPath(Node* goal);
 	void DrawRobot(positionState pos, cv::Mat * map);
 	void Show(positionState robotPos);
-	void drawParticles(std::list<Particle*> particles);
+	void drawParticles(std::list<Particle *> particles);
 	cv::Mat* getMap();
 	//void DrawLidarScan(std::vector<positionState> obstacles);
 private:

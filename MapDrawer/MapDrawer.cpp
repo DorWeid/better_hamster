@@ -202,7 +202,7 @@ void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
 			MapDrawer::SetPointColor(x, y, 255, 255, 0);
 			break;
 		}
-		case(Particle) :
+		case(ParticleType) :
 		{
 			MapDrawer::SetPointColor(x, y, 0, 0, 255);
 			break;
