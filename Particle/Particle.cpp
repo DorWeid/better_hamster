@@ -44,7 +44,7 @@ void Particle::setBel(double newBel)
 std::list<Particle*> Particle::generateParticle()
 {
 	std::list<Particle*> newListParticle;
-	for(int i =0; i < 5; i++){
+	for(int i =0; i < 50; i++){
 		Particle* newParticle = new Particle();
 		
 		do
