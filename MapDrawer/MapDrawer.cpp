@@ -148,7 +148,7 @@ void MapDrawer::drawParticles(std::list<Particle*> particles)
 
 	for (std::list<Particle*>::iterator listIterator = particles.begin(); listIterator != particles.end(); listIterator++)
 	{
-		if ((*listIterator)->bel > 0.03)
+		if ((*listIterator)->bel > 0.02)
 		{
 			MapDrawer::SetPointType((*listIterator)->x ,(*listIterator)->y, GoodParticle);
 			bestParticalesAvrageBelief += (*listIterator)->bel;
@@ -211,12 +211,12 @@ void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
 		}
 		case(GoodParticle) :
 		{
-			MapDrawer::SetPointColor(x, y, 0, 255, 0);
+			MapDrawer::SetPointColor(x, y,255, 255, 255);
 			break;
 		}
 		case(BadParticle) :
 		{
-			MapDrawer::SetPointColor(x, y, 255, 0, 0);
+			MapDrawer::SetPointColor(x, y, 255,255, 255);
 			break;
 		}
 

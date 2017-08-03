@@ -119,12 +119,6 @@ void startRobot()
 	rRobot->mapWidth = roomRealMapFromMemory.getWidth();
 	rRobot->resolution = mapResolution;
 
- //localizationManager->InitParticalesOnMap(&startPositionState);
-
- //initializeParticalesOnRobot(roomRealMapFromMemory, roomBlownMap, localizationManager, mapDrawer, goalPos);
-
- //mapDrawer->DrawRobot(robot.GetRealHamsterLocation());
-
 	MovementManager movementManager(rRobot, mapDrawer);
 
 	// If the robot is conected
