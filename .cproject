@@ -33,8 +33,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.290793434" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.1501276448" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="HamsterAPICommon"/>
-									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
 									<listOptionValue builtIn="false" value="CogniAlgCPP"/>
 									<listOptionValue builtIn="false" value="HamsterAPIClientCPP"/>

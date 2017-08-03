@@ -4,6 +4,7 @@
 #include "PathPlanner/PathPlanner.h"
 #include <stdlib.h>
 #include "MapDrawer/MapDrawer.h"
+#include "Localization/LocalizationManager.h"
 #include "Robot/Robot.h"
 #include "MovementManager/MovementManager.h"
 #include "math.h"
@@ -54,7 +55,6 @@ void startRobot()
 
 	// Get the map of the hamster
 	OccupancyGrid roomRealMapFromMemory = rRobot->getHamster()->getSLAMMap();
-
 	// Send to the map drawer the map give by the hamster
 	MapDrawer* mapDrawer = new MapDrawer(roomRealMapFromMemory.getWidth(), roomRealMapFromMemory.getHeight());
 
@@ -111,13 +111,13 @@ void startRobot()
 	double mapResolution = roomRealMapFromMemory.getResolution();
 
 	
-// TO DO: CHANGE LOCALIZATION MANAGER TO USE PARTICLE
- LocalizationManager* localizationManager = new LocalizationManager(startPositionState, &roomRealMapFromMemory);
+	// TO DO: CHANGE LOCALIZATION MANAGER TO USE PARTICLE
+	LocalizationManager * localizationManager = new LocalizationManager(startPositionState, &roomRealMapFromMemory);
 
- rRobot->localizationManager = localizationManager;
- rRobot->mapHeight = roomRealMapFromMemory.getHeight();
- rRobot->mapWidth = roomRealMapFromMemory.getWidth();
- rRobot->resolution = mapResolution;
+	rRobot->localizationManager = localizationManager;
+	rRobot->mapHeight = roomRealMapFromMemory.getHeight();
+	rRobot->mapWidth = roomRealMapFromMemory.getWidth();
+	rRobot->resolution = mapResolution;
 
  //localizationManager->InitParticalesOnMap(&startPositionState);
 

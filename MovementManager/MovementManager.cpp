@@ -51,6 +51,8 @@ void MovementManager::NavigateToWaypoint(Node* waypoint)
 			moveForward();
 		}
 
+		robot->realLocation = robot->currBeliefedLocation = robot->getRealHamsterLocation();
+
 		// Recalculate distance from the wayPoint
 		recalculateDistanceFromTarget();
 		//mapDrawer->DrawRobot(robot->GetRealHamsterLocation());
