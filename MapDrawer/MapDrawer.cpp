@@ -148,14 +148,8 @@ void MapDrawer::drawParticles(std::list<Particle*> particles)
 
 	for (std::list<Particle*>::iterator listIterator = particles.begin(); listIterator != particles.end(); listIterator++)
 	{
-		cout << "test i : " << (*listIterator)->x;
-
-				cout << "   test j :   " << (*listIterator)->y;
-
 		if ((*listIterator)->bel > 0.02)
 		{
-			
-
 			MapDrawer::SetPointType((*listIterator)->y ,(*listIterator)->x, GoodParticle);
 			bestParticalesAvrageBelief += (*listIterator)->bel;
 			particalesCounter++;
