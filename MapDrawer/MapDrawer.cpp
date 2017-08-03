@@ -211,12 +211,12 @@ void MapDrawer::SetPointType(int x, int y, MapPointType mapPointType)
 		}
 		case(GoodParticle) :
 		{
-			MapDrawer::SetPointColor(x, y, 0, 255, 0);
+			MapDrawer::SetPointColor(x, y,255, 255, 255);
 			break;
 		}
 		case(BadParticle) :
 		{
-			MapDrawer::SetPointColor(x, y, 255, 0, 0);
+			MapDrawer::SetPointColor(x, y, 255,255, 255);
 			break;
 		}
 
