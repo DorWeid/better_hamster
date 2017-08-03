@@ -49,12 +49,12 @@ std::list<Particle*> Particle::generateParticle()
 		
 		do
 		{
-			int distX = 10 - rand() % 20;
-			int distY = 10 - rand() % 20;
-			newParticle->i = distX + this->i;
-			newParticle->j = distY + this->j;
+			int distX = 15 - rand() % 30;
+			int distY = 15 - rand() % 30;
+			newParticle->x = distX + this->x;
+			newParticle->y = distY + this->y;
 
-		} while (this->mapGrid->getCell(newParticle->i, newParticle->j) != CELL_FREE);
+		} while (this->mapGrid->getCell(newParticle->x, newParticle->y) != CELL_FREE);
 		
 		newParticle->bel = this->bel;
 		newParticle->mapGrid = this->mapGrid;
