@@ -126,6 +126,7 @@ void Particle::updateParticlePosition(int deltaX, int deltaY, int deltaYaw)
 	this->yaw += deltaYaw;
 	this->yaw = (this->yaw >= 360) ? this->yaw - 360 : this->yaw;
 	this->yaw = (this->yaw < 0) ? this->yaw + 360 : this->yaw;
+	updateMapLocationToIndex();
 }
 
 void Particle::updateMapLocationToIndex()
